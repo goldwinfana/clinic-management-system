@@ -6,15 +6,15 @@ if((isset($_SESSION["email"]) && isset($_SESSION["password"]))){
         header("location:nurse/view-patient.php");
     }
 
-//    if($_SESSION["user"]=='admin'){
-//        header("location:index.php");
-//    }
+    if($_SESSION["user"]=='pharmacy'){
+        header("location:pharmacy/patient.php");
+    }
 //
 //    if($_SESSION["user"]=='admin'){
 //        header("location:index.php");
 //    }
 	$myemail = $_SESSION['email'];
 }else {
-	header("location:login.php");
+	header("location:home.php");
 }
 ?>

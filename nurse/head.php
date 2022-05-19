@@ -50,5 +50,5 @@ while($row=mysqli_fetch_array($query))
 
 <link rel="stylesheet" type="text/css" href="../files/assets/css/jquery.mCustomScrollbar.css">
 
-<link rel="stylesheet" href="popup_style.css">
+<link rel="stylesheet" href="../popup_style.css">
 </head>

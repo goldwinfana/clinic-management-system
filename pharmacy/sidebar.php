@@ -28,14 +28,9 @@
         <span class="pcoded-mtext">Patients</span>
     </a>
     <ul class="pcoded-submenu" >
-        <li class="" hidden>
-            <a href="patient.php">
-                <span class="pcoded-mtext">Add Patient</span>
-            </a>
-        </li>
         <li class="">
             <a href="view-patient.php">
-                <span class="pcoded-mtext">View Patients Records</span>
+                <span class="pcoded-mtext">View Patients Prescriptions</span>
             </a>
         </li>
     </ul>

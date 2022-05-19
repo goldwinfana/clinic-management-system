@@ -1,4 +1,4 @@
-<?php session_start();?>
+<?php include('check_login.php');include('connect.php');include('pages/alerts.php'); ?>
 
 <link rel="stylesheet" href="popup_style.css">
 <!DOCTYPE html>
@@ -6,7 +6,7 @@
 
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
-<title>Admin Panel</title>
+<title>Login Panel</title>
 
 
 <meta charset="utf-8">
@@ -14,7 +14,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="description" content="#">
 <meta name="keywords" content="Admin , Responsive">
-<meta name="author" content="Nikhil Bhalerao +919423979339.">
 
 
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
@@ -29,159 +28,6 @@
 </head>
 <body class="fix-menu">
 
-<?php
-  include('connect.php');
-  extract($_POST);
-if(isset($_POST['btn_login']))
-{
-  $passw = hash('sha256', $_POST['password']);
-  function createSalt()
-  {
-      return '2123293dsj2hu2nikhiljdsd';
-  }
-  $salt = createSalt();
-  $pass = hash('sha256', $salt . $passw);
-  $url='index.php';
-//echo $pass;
-  if($_POST['user'] == 'admin'){
-    $sql = "SELECT * FROM admin WHERE email='" .$email . "' and password = '". $pass."'";
-    $result = mysqli_query($conn,$sql);
-    $row  = mysqli_fetch_array($result);
-    //print_r($row);
-      if(mysqli_num_rows($result) > 0){
-          $_SESSION["adminid"] = $row['id'];
-          $_SESSION["id"] = $row['id'];
-          $_SESSION["username"] = $row['username'];
-          $_SESSION["password"] = $row['password'];
-          $_SESSION["email"] = $row['email'];
-          $_SESSION["fname"] = $row['fname'];
-          $_SESSION["lname"] = $row['lname'];
-          $_SESSION['image'] = $row['image'];
-          $_SESSION['user'] = $_POST['user'];
-          $url='index.php';
-      }
-
-  }else if($_POST['user'] == 'doctor'){    
-    $sql = "SELECT * FROM doctor WHERE email='" .$email . "' and password = '". $pass."'";
-    $result = mysqli_query($conn,$sql);
-    $row  = mysqli_fetch_array($result);
-    //print_r($row);    
-      if(mysqli_num_rows($result) > 0) {
-          $_SESSION["doctorid"] = $row['doctorid'];
-          $_SESSION["id"] = $row['doctorid'];
-          $_SESSION["password"] = $row['password'];
-          $_SESSION["email"] = $row['email'];
-          $_SESSION["fname"] = $row['doctorname'];
-          $_SESSION['user'] = $_POST['user'];
-          $url = 'doctor/view-patient.php';
-      }
-  }else if($_POST['user'] == 'pharmacy'){
-      $sql = "SELECT * FROM pharmacy WHERE email='" .$email . "' and password = '". $pass."'";
-      $result = mysqli_query($conn,$sql);
-      $row  = mysqli_fetch_array($result);
-      //print_r($row);
-      if(mysqli_num_rows($result) > 0) {
-          $_SESSION["pharmacyid"] = $row['pharmacyid'];
-          $_SESSION["id"] = $row['pharmacyid'];
-          $_SESSION["password"] = $row['password'];
-          $_SESSION["email"] = $row['email'];
-          $_SESSION["fname"] = $row['fname'];
-          $_SESSION['user'] = $_POST['user'];
-          $url = 'pharmacy/view-patient.php';
-      }
-  }else if($_POST['user'] == 'patient'){
-    $sql = "SELECT * FROM patient WHERE email='" .$email . "' and password = '". $pass."'";
-    $result = mysqli_query($conn,$sql);
-    $row  = mysqli_fetch_array($result);
-    //print_r($row);
-      if(mysqli_num_rows($result) > 0) {
-          $_SESSION["patientid"] = $row['patientid'];
-          $_SESSION["id"] = $row['patientid'];
-          $_SESSION["password"] = $row['password'];
-          $_SESSION["email"] = $row['email'];
-          $_SESSION["fname"] = $row['patientname'];
-          $_SESSION['user'] = $_POST['user'];
-          $url = 'patient/profile.php';
-      }
-  }else if($_POST['user'] == 'nurse'){
-      $sql = "SELECT * FROM nurse WHERE email='" .$email . "' and password = '". $pass."'";
-      $result = mysqli_query($conn,$sql);
-      $row  = mysqli_fetch_array($result);
-      if(mysqli_num_rows($result) > 0) {
-          $_SESSION["id"] = $row['nurseid'];
-          $_SESSION["password"] = $row['password'];
-          $_SESSION["email"] = $row['email'];
-          $_SESSION["fname"] = $row['fname'];
-          $_SESSION['user'] = $_POST['user'];
-          $url = 'nurse/view-patient.php';
-      }
-  }
-    //print_r($row);
-     $count=mysqli_num_rows($result);
-     if($count==1 && isset($_SESSION["email"]) && isset($_SESSION["password"])) {
-    {       
-        ?>
-         <div class="popup popup--icon -success js_success-popup popup--visible">
-          <div class="popup__background"></div>
-          <div class="popup__content">
-            <h3 class="popup__content__title">
-              Success 
-            </h3>
-            <p>Login Successfully</p>
-            <p>
-             <!--  <a href="index.php"><button class="button button--success" data-for="js_success-popup"></button></a> -->
-             <?php echo "<script>setTimeout(\"location.href = '$url';\",1500);</script>"; ?>
-            </p>
-          </div>
-        </div>
-   <!--   <script>
-     window.location="index.php";
-     </script> -->
-     <?php
-    }
-}
-else {?>
-     <div class="popup popup--icon -error js_error-popup popup--visible">
-      <div class="popup__background"></div>
-      <div class="popup__content">
-        <h3 class="popup__content__title">
-          Error 
-        </h3>
-        <p>Invalid Email or Password</p>
-        <p>
-          <a href="login.php"><button class="button button--error" data-for="js_error-popup">Close</button></a>
-        </p>
-      </div>
-    </div>
-
-<?php
-      }
-    
-   }
-?>
-
-
-<?php
-$que="select * from manage_website";
-$query=$conn->query($que);
-while($row=mysqli_fetch_array($query))
-{
-  //print_r($row);
-  extract($row);
-  $business_name = $row['business_name'];
-  $business_email = $row['business_email'];
-  $business_web = $row['business_web'];
-  $portal_addr = $row['portal_addr'];
-  $addr = $row['addr'];
-  $curr_sym = $row['curr_sym'];
-  $curr_position = $row['curr_position'];
-  $front_end_en = $row['front_end_en'];
-  $date_format = $row['date_format'];
-  $def_tax = $row['def_tax'];
-  $logo = $row['logo'];
-}
-?>
-
 
 <section class="login-block">
 
@@ -193,7 +39,7 @@ while($row=mysqli_fetch_array($query))
 
 <div class="auth-box card" >
   <div class="text-center">
-<image class="profile-img" src="uploadImage/Logo/<?php echo $logo; ?>" style="width: 60%"></image>
+<image class="profile-img" src="uploadImage/Logo/hoslogo.jpg" style="width: 60%"></image>
 </div> 
 <div class="card-block" >
  
@@ -202,7 +48,7 @@ while($row=mysqli_fetch_array($query))
 <h5 class="text-center txt-primary">Sign In</h5>
 </div>
 </div>
-  <form method="POST" >
+  <form method="POST" action="pages/save_user_client.php">
     <div class="form-group form-primary">
       <select name="user" class="form-control" required="">
         <option value="">-- Select One --</option>

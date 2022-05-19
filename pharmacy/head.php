@@ -5,7 +5,7 @@
 
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
-<title>Nurse Panel</title>
+<title>Pharmacy Panel</title>
 
 
 <meta charset="utf-8">
@@ -24,7 +24,7 @@ while($row=mysqli_fetch_array($query))
   $logo = $row['logo'];
 }
 ?>
-<link rel="icon" href="../uploadImage/Logo/<?php echo $logo; ?>" type="image/x-icon">
+<link rel="icon" href="../uploadImage/Logo/hoslogo.jpg" type="image/x-icon">
 <link href="../files/assets/css/lib/bootstrap/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
 
@@ -50,5 +50,5 @@ while($row=mysqli_fetch_array($query))
 
 <link rel="stylesheet" type="text/css" href="../files/assets/css/jquery.mCustomScrollbar.css">
 
-<link rel="stylesheet" href="popup_style.css">
+<link rel="stylesheet" href="../popup_style.css">
 </head>
