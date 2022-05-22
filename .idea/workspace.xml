@@ -1,28 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cc857100-a0a4-4f8a-9e35-fd700173e3b3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/clinic-management-system.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/clinic-management-system.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/check_login.php" beforeDir="false" afterPath="$PROJECT_DIR$/check_login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/clinic_db.sql" beforeDir="false" afterPath="$PROJECT_DIR$/clinic_db.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nurse/head.php" beforeDir="false" afterPath="$PROJECT_DIR$/nurse/head.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nurse/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/nurse/header.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nurse/view-patient.php" beforeDir="false" afterPath="$PROJECT_DIR$/nurse/view-patient.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/save_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/save_user.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pharmacy/changepassword.php" beforeDir="false" afterPath="$PROJECT_DIR$/pharmacy/changepassword.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pharmacy/head.php" beforeDir="false" afterPath="$PROJECT_DIR$/pharmacy/head.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pharmacy/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/pharmacy/header.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pharmacy/patient.php" beforeDir="false" afterPath="$PROJECT_DIR$/pharmacy/patient.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pharmacy/profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/pharmacy/profile.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pharmacy/sidebar.php" beforeDir="false" afterPath="$PROJECT_DIR$/pharmacy/sidebar.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pharmacy/view-patient.php" beforeDir="false" afterPath="$PROJECT_DIR$/pharmacy/view-patient.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/signup.php" beforeDir="false" afterPath="$PROJECT_DIR$/signup.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploadImage/Logo/logo for hospital system.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/uploadImage/Logo/hoslogo.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view-patient.php" beforeDir="false" afterPath="$PROJECT_DIR$/view-patient.php" afterDir="false" />
-    </list>
+    <list default="true" id="cc857100-a0a4-4f8a-9e35-fd700173e3b3" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -72,22 +51,34 @@
       <workItem from="1651996278276" duration="1581000" />
       <workItem from="1652153139474" duration="98000" />
       <workItem from="1652764032570" duration="14614000" />
-      <workItem from="1652933071742" duration="12535000" />
+      <workItem from="1652933071742" duration="12753000" />
     </task>
+    <task id="LOCAL-00001" summary="Second push of may">
+      <created>1652946142639</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1652946142639</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Second push of may" />
+    <option name="LAST_COMMIT_MESSAGE" value="Second push of may" />
   </component>
   <component name="WindowStateProjectService">
     <state x="413" y="144" key="#com.intellij.ide.scriptingContext.ui.PerFileMappingsDialogWrapper" timestamp="1652766942854">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="413" y="144" key="#com.intellij.ide.scriptingContext.ui.PerFileMappingsDialogWrapper/0.0.1366.728@0.0.1366.728" timestamp="1652766942854" />
-    <state x="307" y="0" key="CommitChangelistDialog2" timestamp="1652946062166">
+    <state x="307" y="0" key="CommitChangelistDialog2" timestamp="1652946133978">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="307" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1652946062166" />
+    <state x="307" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1652946133978" />
     <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1651775914363">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -100,10 +91,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="184" y="9" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1652767174609" />
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1652946104591">
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1652946212156">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1652946104591" />
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1652946212156" />
     <state x="500" y="278" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1652945718769">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
