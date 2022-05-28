@@ -6,7 +6,6 @@ $que="select * from manage_website";
 $query=$conn->query($que);
 while($row=mysqli_fetch_array($query))
 {
-    //print_r($row);
     extract($row);
     $business_name = $row['business_name'];
     $business_email = $row['business_email'];
