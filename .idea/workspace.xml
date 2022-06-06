@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cc857100-a0a4-4f8a-9e35-fd700173e3b3" name="Default Changelist" comment="">
+    <list default="true" id="cc857100-a0a4-4f8a-9e35-fd700173e3b3" name="Default Changelist" comment="June push">
+      <change afterPath="$PROJECT_DIR$/connect2.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clinic_db (1).sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/clinic_db.sql" beforeDir="false" afterPath="$PROJECT_DIR$/clinic_db.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doctor.php" beforeDir="false" afterPath="$PROJECT_DIR$/doctor.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doctor/head.php" beforeDir="false" afterPath="$PROJECT_DIR$/doctor/head.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/doctor/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/doctor/header.php" afterDir="false" />
@@ -84,7 +87,7 @@
       <workItem from="1653744379461" duration="2279000" />
       <workItem from="1653887494237" duration="4575000" />
       <workItem from="1654024122031" duration="37000" />
-      <workItem from="1654328419025" duration="22288000" />
+      <workItem from="1654328419025" duration="22543000" />
     </task>
     <task id="LOCAL-00001" summary="Second push of may">
       <created>1652946142639</created>
@@ -100,7 +103,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653744848001</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="June push">
+      <created>1654532524075</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1654532524098</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -108,17 +118,18 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Second push of may" />
-    <option name="LAST_COMMIT_MESSAGE" value="Second push of may" />
+    <MESSAGE value="June push" />
+    <option name="LAST_COMMIT_MESSAGE" value="June push" />
   </component>
   <component name="WindowStateProjectService">
     <state x="413" y="144" key="#com.intellij.ide.scriptingContext.ui.PerFileMappingsDialogWrapper" timestamp="1652766942854">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="413" y="144" key="#com.intellij.ide.scriptingContext.ui.PerFileMappingsDialogWrapper/0.0.1366.728@0.0.1366.728" timestamp="1652766942854" />
-    <state x="307" y="0" key="CommitChangelistDialog2" timestamp="1653744760911">
+    <state x="307" y="0" key="CommitChangelistDialog2" timestamp="1654532511225">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="307" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1653744760911" />
+    <state x="307" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1654532511225" />
     <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1651775914363">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -131,17 +142,17 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="184" y="9" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1652767174609" />
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1653744861382">
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2" timestamp="1654532534523">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1653744861382" />
+    <state x="275" y="97" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1654532534523" />
     <state x="92" y="92" width="1182" height="544" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1654467137137">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="92" y="92" width="1182" height="544" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1366.728@0.0.1366.728" timestamp="1654467137137" />
-    <state x="500" y="278" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1654532101187">
+    <state x="500" y="278" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1654532348809">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="500" y="278" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1654532101187" />
+    <state x="500" y="278" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1654532348809" />
   </component>
 </project>

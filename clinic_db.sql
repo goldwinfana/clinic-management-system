@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 08, 2022 at 09:47 AM
+-- Generation Time: Jun 06, 2022 at 06:16 PM
 -- Server version: 10.4.16-MariaDB
 -- PHP Version: 7.4.12
 
@@ -101,7 +101,7 @@ CREATE TABLE `doctor` (
 --
 
 INSERT INTO `doctor` (`doctorid`, `doctorname`, `mobileno`, `departmentid`, `email`, `password`, `status`, `education`, `experience`, `consultancy_charge`, `delete_status`) VALUES
-(1, 'Dr Kat', '9423979339', 1, 'doctor@gmail.com', 'aa7f019c326413d5b8bcad4314228bcd33ef557f5d81c7cc977f7728156f4357', 'Active', 'MD', 3.0, 200.00, 0);
+(1, 'Dr Kat', '0710217499', 1, 'doctor@gmail.com', 'aa7f019c326413d5b8bcad4314228bcd33ef557f5d81c7cc977f7728156f4357', 'Active', 'MD', 3.0, 200.00, 0);
 
 -- --------------------------------------------------------
 
@@ -152,7 +152,7 @@ CREATE TABLE `manage_website` (
 --
 
 INSERT INTO `manage_website` (`id`, `business_name`, `business_email`, `business_web`, `portal_addr`, `addr`, `curr_sym`, `curr_position`, `front_end_en`, `date_format`, `def_tax`, `logo`) VALUES
-(1, 'Mayuri K', 'mayuri.infospace@gmail.com', '#', '#', '<p>Maharashtra, India</p>\r\n', '$', 'right', '0', '0000-00-00', '0.20', 'hoslogo.jpg');
+(1, 'Mayuri K', 'mayuri.infospace@gmail.com', '#', '#', '<p>Maharashtra, India</p>\r\n', '$', 'right', '0', '0000-00-00', '0.20', 'logo for hospital system.jpg');
 
 -- --------------------------------------------------------
 
@@ -184,31 +184,31 @@ INSERT INTO `nurse` (`nurseid`, `fname`, `lname`, `email`, `password`, `mobile`,
 --
 
 CREATE TABLE `patient` (
-  `patientid` int(10) NOT NULL,
-  `patientname` varchar(50) NOT NULL,
-  `admissiondate` date NOT NULL,
-  `admissiontime` time NOT NULL,
+  `patientid` int(11) NOT NULL,
+  `id_number` text NOT NULL,
+  `fname` varchar(50) NOT NULL,
+  `lname` text NOT NULL,
   `address` varchar(250) NOT NULL,
   `mobileno` varchar(15) NOT NULL,
-  `id_number` varchar(25) DEFAULT NULL,
-  `pincode` varchar(20) NOT NULL,
-  `prescription` text NOT NULL,
-  `temperature` text DEFAULT NULL,
+  `pincode` varchar(20) DEFAULT NULL,
+  `prescription` text DEFAULT NULL,
+  `confirm_collection` text DEFAULT NULL,
   `email` varchar(50) NOT NULL,
   `password` text NOT NULL,
-  `bloodgroup` varchar(20) NOT NULL,
+  `blood_pressure` text DEFAULT NULL,
   `gender` varchar(10) NOT NULL,
-  `dob` date NOT NULL,
-  `status` varchar(10) NOT NULL,
-  `delete_status` int(11) NOT NULL
+  `age` int(11) NOT NULL,
+  `status` varchar(10) DEFAULT NULL,
+  `delete_status` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `patient`
 --
 
-INSERT INTO `patient` (`patientid`, `patientname`, `admissiondate`, `admissiontime`, `address`, `mobileno`, `id_number`, `pincode`, `prescription`, `temperature`, `email`, `password`, `bloodgroup`, `gender`, `dob`, `status`, `delete_status`) VALUES
-(1, 'James Bond', '2020-05-25', '11:00:00', 'Soshanguve', '9423979339', '7708085583084', '1234', 'Panado pills', '35,2', 'goldwinfana5@gmail.com', 'bbcff4db4d8057800d59a68224efd87e545fa1512dfc3ef68298283fbb3b6358', 'B+', 'Female', '1995-07-25', 'Active', 0);
+INSERT INTO `patient` (`patientid`, `id_number`, `fname`, `lname`, `address`, `mobileno`, `pincode`, `prescription`, `confirm_collection`, `email`, `password`, `blood_pressure`, `gender`, `age`, `status`, `delete_status`) VALUES
+(1, '7802025583087', 'James Bond', '', 'Soshanguve', '9423979339', '1234', 'Panado for the patienc', 'collected', 'goldwinfana5@gmail.com', 'bbcff4db4d8057800d59a68224efd87e545fa1512dfc3ef68298283fbb3b6358', '88,2', 'Female', 19950725, 'Active', 0),
+(2, '7802025583080', 'fana', 'fana', '477 Sisulu Street', '0610217499', NULL, NULL, NULL, 'goldwinfana5@gmail.com', 'f1fb12f160dc4ca8ab66f87074fc1ae47908b4e079c35ce317474b5a85a8878c', NULL, 'male', 24, '0', 0);
 
 -- --------------------------------------------------------
 
@@ -222,7 +222,7 @@ CREATE TABLE `pharmacy` (
   `lname` text NOT NULL,
   `email` text NOT NULL,
   `password` text NOT NULL,
-  `status` int(11) NOT NULL,
+  `status` text DEFAULT NULL,
   `mobile` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -231,7 +231,7 @@ CREATE TABLE `pharmacy` (
 --
 
 INSERT INTO `pharmacy` (`pharmacyid`, `fname`, `lname`, `email`, `password`, `status`, `mobile`) VALUES
-(1, 'pharmacy', 'pahr', 'pharmacy@gmail.com', '12345', 0, '0751245555');
+(1, 'pharmacy', 'pahrs', 'pharmacy@gmail.com', 'aa7f019c326413d5b8bcad4314228bcd33ef557f5d81c7cc977f7728156f4357', 'Active', '0751245555');
 
 -- --------------------------------------------------------
 
@@ -352,8 +352,7 @@ ALTER TABLE `nurse`
 -- Indexes for table `patient`
 --
 ALTER TABLE `patient`
-  ADD PRIMARY KEY (`patientid`),
-  ADD KEY `loginid` (`email`);
+  ADD PRIMARY KEY (`patientid`);
 
 --
 -- Indexes for table `pharmacy`
@@ -405,7 +404,7 @@ ALTER TABLE `nurse`
 -- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `patientid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `patientid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `pharmacy`
