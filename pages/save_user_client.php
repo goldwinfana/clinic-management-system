@@ -3,7 +3,9 @@
 session_start();
 $current_date = date('Y-m-d');
 $return = $_SERVER['HTTP_REFERER'];
-include('../connect.php');
+include('../connect2.php');
+$init = $pdo->open();
+
 if(isset($_POST['btn_signup'])){
     if($_POST['password'] !=$_POST['confirm-password']){
         $_SESSION['error'] = 'Password does not match';
@@ -20,27 +22,36 @@ if(isset($_POST['btn_signup'])){
 
     $salt = createSalt();
     $pass = hash('sha256', $salt . $passw);
+    $id = $_POST['id_number'];
+    $month = substr($id,2,2);
+    $day = substr($id,4,2);
+    $gender=  substr($id,6,1) >= 5 ? 'male': 'female';
+    $dob= $day.'-'.$month.'-'.substr($id,0,2) <= 22 ? '19': '20'.substr($id,0,2);
+
 
     try{
-        $sql ="INSERT INTO patient (patientid,fname, lname,email,password, gender,  age,mobileno,address,status)
-                VALUES ('$_POST[id_number]','$_POST[fname]','$_POST[lname]','$_POST[email]','$pass','$_POST[gender]','$_POST[age]','$_POST[contact]','$_POST[addr]',0)";
-        if ($conn->query($sql) === TRUE) {
+
+        $sql =$init->prepare("INSERT INTO patient (id_number,fname, lname,email,password, gender,  age,mobileno,address,status,delete_status)
+                VALUES ('$_POST[id_number]','$_POST[fname]','$_POST[lname]','$_POST[email]','$pass','$gender','$_POST[age]','$_POST[contact]','$_POST[addr]',0,0)");
+        if ($sql->execute()) {
             $_SESSION['success'] = 'Registration Successful';
             header('location: ../login.php');
         }else{
-            $_SESSION['error'] = 'Registration Unsuccessful';
+            $_SESSION['error'] = $sql->execute();
             header('location: ../signup.php');
         }
+
     }catch (Exception $exception){
         $_SESSION['error'] = $exception->getMessage();
         header('location: ../signup.php');
     }
 }
 
+
 if(isset($_POST['btn_login']))
 {
     $email = $_POST['email'];
-    $row='';
+    $count='';
     $passw = hash('sha256', $_POST['password']);
 
     $salt = createSalt();
@@ -48,11 +59,11 @@ if(isset($_POST['btn_login']))
     $url='index.php';
 
     if($_POST['user'] == 'admin'){
-        $sql = "SELECT * FROM admin WHERE email='" .$email . "' and password = '". $pass."'";
-        $result = mysqli_query($conn,$sql);
-        $row  = mysqli_fetch_array($result);
-        //print_r($row);
-        if(mysqli_num_rows($result) > 0){
+        $sql = $init->prepare("SELECT * FROM admin WHERE email='" .$email . "' and password = '". $pass."'");
+        $result = $sql->execute();
+        $row  = $sql->fetch();
+        $count=$sql->rowCount();
+        if($sql->rowCount() > 0){
             $_SESSION["adminid"] = $row['id'];
             $_SESSION["id"] = $row['id'];
             $_SESSION["username"] = $row['username'];
@@ -62,16 +73,16 @@ if(isset($_POST['btn_login']))
             $_SESSION["lname"] = $row['lname'];
             $_SESSION['image'] = $row['image'];
             $_SESSION['user'] = $_POST['user'];
-            $url='index.php';
+            $url='../index.php';
         }
 
     }else if($_POST['user'] == 'doctor'){
-        $sql = "SELECT * FROM doctor WHERE email='" .$email . "' and password = '". $pass."'";
-        $result = mysqli_query($conn,$sql);
-        $row  = mysqli_fetch_array($result);
-        //print_r($row);
-        if(mysqli_num_rows($result) > 0) {
-            if($row['status']==0){
+        $sql = $init->prepare("SELECT * FROM doctor WHERE email='" .$email . "' and password = '". $pass."'");
+        $result = $sql->execute();
+        $row  = $sql->fetch();
+        $count=$sql->rowCount();
+        if($sql->rowCount() > 0) {
+            if($row['status']!='Active'){
                 $_SESSION['error'] = 'Account not yet active';
                 header('location: ../login.php');
                 exit(0);
@@ -82,17 +93,17 @@ if(isset($_POST['btn_login']))
                 $_SESSION["email"] = $row['email'];
                 $_SESSION["fname"] = $row['doctorname'];
                 $_SESSION['user'] = $_POST['user'];
-                $url = 'doctor/view-patient.php';
+                $url = '../doctor/view-patient.php';
             }
 
         }
     }else if($_POST['user'] == 'pharmacy'){
-        $sql = "SELECT * FROM pharmacy WHERE email='" .$email . "' and password = '". $pass."'";
-        $result = mysqli_query($conn,$sql);
-        $row  = mysqli_fetch_array($result);
-        //print_r($row);
-        if(mysqli_num_rows($result) > 0) {
-            if($row['status']==0){
+        $sql = $init->prepare("SELECT * FROM pharmacy WHERE email='" .$email . "' and password = '". $pass."'");
+        $result = $sql->execute();
+        $row  = $sql->fetch();
+        $count=$sql->rowCount();
+        if($sql->rowCount() > 0) {
+            if($row['status']!='Active'){
                 $_SESSION['error'] = 'Account not yet active';
                 header('location: ../login.php');
                 exit(0);
@@ -108,12 +119,12 @@ if(isset($_POST['btn_login']))
 
         }
     }else if($_POST['user'] == 'patient'){
-        $sql = "SELECT * FROM patient WHERE email='" .$email . "' and password = '". $pass."'";
-        $result = mysqli_query($conn,$sql);
-        $row  = mysqli_fetch_array($result);
-        //print_r($row);
-        if(mysqli_num_rows($result) > 0) {
-            if($row['status']==0){
+        $sql = $init->prepare("SELECT * FROM patient WHERE email='" .$email . "' and password = '". $pass."'");
+        $result = $sql->execute();
+        $row  = $sql->fetch();
+        $count=$sql->rowCount();
+        if($sql->rowCount() > 0) {
+            if($row['status']!='Active'){
                 $_SESSION['error'] = 'Account not yet active';
                 header('location: ../login.php');
                 exit(0);
@@ -130,20 +141,28 @@ if(isset($_POST['btn_login']))
 
         }
     }else if($_POST['user'] == 'nurse'){
-        $sql = "SELECT * FROM nurse WHERE email='" .$email . "' and password = '". $pass."'";
-        $result = mysqli_query($conn,$sql);
-        $row  = mysqli_fetch_array($result);
-        if(mysqli_num_rows($result) > 0) {
-            $_SESSION["id"] = $row['nurseid'];
-            $_SESSION["password"] = $row['password'];
-            $_SESSION["email"] = $row['email'];
-            $_SESSION["fname"] = $row['fname'];
-            $_SESSION['user'] = $_POST['user'];
-            $url = 'nurse/view-patient.php';
+        $sql = $init->prepare("SELECT * FROM nurse WHERE email='" .$email . "' and password = '". $pass."'");
+        $result = $sql->execute();
+        $row  = $sql->fetch();
+        $count=$sql->rowCount();
+        if($sql->rowCount() > 0) {
+            if($row['status']!='Active'){
+                $_SESSION['error'] = 'Account not yet active';
+                header('location: ../login.php');
+                exit(0);
+            }else{
+
+                $_SESSION["id"] = $row['nurseid'];
+                $_SESSION["password"] = $row['password'];
+                $_SESSION["email"] = $row['email'];
+                $_SESSION["fname"] = $row['fname'];
+                $_SESSION['user'] = $_POST['user'];
+                $url = '../nurse/view-patient.php';
+            }
+
         }
     }
-    //print_r($row);
-    $count=mysqli_num_rows($result);
+
     if($count==1 && isset($_SESSION["email"]) && isset($_SESSION["password"])) {
 
       $_SESSION['success'] = 'Login Successfully';
@@ -187,5 +206,5 @@ function checkPassword($password){
 //}
 
 
-
+$pdo->close();
 

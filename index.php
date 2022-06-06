@@ -5,13 +5,14 @@
 <?php include('head.php');?>
 <?php include('header.php');?>
 <?php include('sidebar.php');?>
-<?php include('connect.php');?>
 
 <?php
-include('connect.php');
-$sql = "select * from admin where id = '".$_SESSION["id"]."'";
-$result=$conn->query($sql);
-$row1=mysqli_fetch_array($result);
+include('../connect2.php');
+$init = $pdo->open();
+
+$sql =$init->prepare("select * from admin where id = '".$_SESSION["id"]."'");
+$sql->execute();
+$row1 = $sql->fetch();
 
 ?>
 

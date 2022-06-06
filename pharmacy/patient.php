@@ -2,13 +2,15 @@
  include('head.php');
  include('header.php');
  include('sidebar.php');
- include('connect.php');
+    include('../connect2.php');
+
+    $init = $pdo->open();
 
 if(isset($_GET['confirm_collection']))
 {
-    $sql="SELECT * FROM patient WHERE patientid='$_GET[confirm_collection]' ";
-    $qsql = mysqli_query($conn,$sql);
-    $rsedit = mysqli_fetch_array($qsql);
+    $sql =$init->prepare("SELECT * FROM patient WHERE id_number='$_GET[confirm_collection]'");
+    $qsql=$sql->execute();
+    $rsedit = $sql->fetch();
 
 }
 

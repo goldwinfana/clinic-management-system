@@ -1,4 +1,4 @@
-<?php include('check_login.php');include('connect.php');include('pages/alerts.php'); ?>
+<?php include('connect.php');include('pages/alerts.php'); ?>
 
 <link rel="stylesheet" href="popup_style.css">
 <!DOCTYPE html>

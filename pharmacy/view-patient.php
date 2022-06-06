@@ -2,8 +2,10 @@
  include('head.php');
  include('header.php');
  include('sidebar.php');
- include('connect.php');
  include('../pages/alerts.php');
+ include('../connect2.php');
+
+$init = $pdo->open();
  ?>
 
 <div class="pcoded-content">
@@ -50,34 +52,41 @@
                                 <table id="dom-jqry" class="table table-striped table-bordered nowrap">
                                     <thead>
                                     <tr>
-                                        <th>Patient Details</th>
+                                        <th>Patient Name</th>
+                                        <th>Admission details</th>
                                         <th>Address</th>
-                                        <th>Patient Profile</th>
-                                        <th>Patient Temperature</th>
+                                        <th>Patient Blood</th>
                                         <th>Prescription</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <?php
-                                    $sql ="SELECT * FROM patient WHERE confirm_collection IS NULL";
-                                    $qsql = mysqli_query($conn,$sql);
-                                    while($rs = mysqli_fetch_array($qsql))
+                                    $sql =$init->prepare("SELECT * FROM patient where status='Active' and delete_status='0'");
+                                    $sql->execute();
+                                    $qsql = $sql->fetchAll();
+                                    foreach($qsql as $rs)
                                     {
+                                        $dob = substr($rs['id_number'],4,2).'-'.substr($rs['id_number'],2,2).'-';
+                                        $year=(substr($rs['id_number'],0,2) <= 22) ? '19': '20'.substr($rs['id_number'],0,2);
+                                        $temp = $rs['blood_pressure']==null?'<i class="text-warning">Please Update Temperature</i>':'<i class="">'.$rs['blood_pressure'].'</i>';;
 
                                         echo "<tr>
-                                                                <td>$rs[fname] $rs[lname]<br>
-                                                                <strong>Email :</strong> $rs[email] </td>
-                                                                <td>$rs[address]<br>
-                                                                Mob No. - $rs[mobileno]</td>
-                                                                <td><strong>ID Number</strong> - $rs[patientid]<br>
-                                                                <strong>Blood group</strong> - $rs[bloodgroup]<br>
-                                                                <strong>Gender</strong> - &nbsp;$rs[gender]<br>
-                                                                <strong>Age</strong> - &nbsp;$rs[age]</td>
-                                                                <td><strong>$rs[temperature]</strong>  </td>
-                                                                <td><strong>$rs[prescription]</strong>  </td>
-                                                                <td align='center'>Confirm Pill Collection ?<br><a id='$rs[patientid]' href='patient.php?confirm_collection=$rs[patientid]' class='btn btn-primary confirm-pill'>Confirm</a></td>
-                                                          </tr>";
+                                                <td><strong>Names : </strong> $rs[fname] $rs[lname]<br>
+                                                <strong>Email :</strong> $rs[email] </td>
+                                                <td><strong>Addr : </strong>$rs[address]<br>
+                                                <strong>Mob No : </strong>$rs[mobileno]</td>
+                                                <td><strong>ID Number</strong> - $rs[id_number]<br>
+                                                <strong>Gender</strong>: &nbsp;$rs[gender]<br>
+                                                <strong>DOB : </strong> $dob$year</td>
+                                                <td><strong>$temp </strong>  </td>
+                                                <td><strong>$rs[prescription] </strong> </td>
+                                                <td align='center'>Status - $rs[status] <br>";
+                                        if(isset($_SESSION['user']))
+                                        {
+                                            echo "<a href='patient.php?confirm_collection=$rs[id_number]' class='btn btn-primary'>Confirm Collection</a>";
+                                        }
+                                        echo "</td></tr>";
                                     }
                                     ?>
                                     </tbody>

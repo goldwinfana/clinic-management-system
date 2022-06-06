@@ -29,6 +29,11 @@ if(isset($_SESSION['success'])){?>
         </div>
     </div>
 <?php } unset($_SESSION['success']);?>
+
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap.min.js"></script>
+
 <script>
     var addButtonTrigger = function addButtonTrigger(el) {
         el.addEventListener('click', function () {
@@ -39,4 +44,16 @@ if(isset($_SESSION['success'])){?>
 
     Array.from(document.querySelectorAll('button[data-for]')).
     forEach(addButtonTrigger);
+
+    $(function() {
+        $(document).ready(function () {
+            $('#dom-jqry').DataTable();
+            $('#users_table').DataTable();
+            $('#driver_table').DataTable();
+            $('#teacher_table').DataTable();
+            $('#admin_table').DataTable();
+            $('#transport_table').DataTable();
+        });
+
+    });
 </script>

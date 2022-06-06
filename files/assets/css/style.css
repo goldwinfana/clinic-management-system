@@ -25220,3 +25220,10 @@ body.dark #styleSelector {
 body.dark #styleSelector .form-control {
 	color: #404e67
 }
+
+.pcoded-main-container{
+	position: fixed !important;
+}
+.pcoded-content{
+	margin-top: 50px !important;
+}

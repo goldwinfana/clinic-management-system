@@ -3,12 +3,14 @@
 <?php include('head.php');?>
 <?php include('header.php');?>
 <?php include('sidebar.php');?>
-<?php include('connect.php');
+<?php include('../connect2.php');
+
+$init = $pdo->open();
 if(isset($_GET['id']))
 {
-    $sql ="UPDATE patient SET delete_status='1' WHERE patientid='$_GET[id]'";
-    $qsql=mysqli_query($conn,$sql);
-    if(mysqli_affected_rows($conn) == 1)
+    $sql =$init->prepare("UPDATE patient SET delete_status='1' WHERE patientid='$_GET[id]'");
+    $qsql=$sql->execute();
+    if($sql->rowCount() > 0)
     {
         ?>
         <div class="popup popup--icon -success js_success-popup popup--visible">
@@ -38,15 +40,16 @@ if(isset($_GET['delid']))
         <div class="popup__content">
             <h3 class="popup__content__title">
                 Sure
-                </h1>
-                <p>Are You Sure To Delete This Record?</p>
-                <p>
-                    <a href="view-patient.php?id=<?php echo $_GET['delid']; ?>" class="button button--success" data-for="js_success-popup">Yes</a>
-                    <a href="view-patient.php" class="button button--error" data-for="js_success-popup">No</a>
-                </p>
+            </h3>
+            <p>Are You Sure To Delete This Record?</p>
+            <p>
+                <a href="view-patient.php?id=<?php echo $_GET['delid']; ?>" class="button button--success" data-for="js_success-popup">Yes</a>
+                <a href="view-patient.php" class="button button--error" data-for="js_success-popup">No</a>
+            </p>
         </div>
     </div>
 <?php } ?>
+
 <div class="pcoded-content">
     <div class="pcoded-inner-content">
 
@@ -94,33 +97,31 @@ if(isset($_GET['delid']))
                                         <th>Patient Name</th>
                                         <th>Admission details</th>
                                         <th>Address</th>
-                                        <th>Patient Profile</th>
-                                        <th>Patient Temperature</th>
+                                        <th>Patient Blood Pressure</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <?php
-                                    $sql ="SELECT * FROM patient where delete_status='0'";
-                                    $qsql = mysqli_query($conn,$sql);
-                                    while($rs = mysqli_fetch_array($qsql))
+                                    $sql =$init->prepare("SELECT * FROM patient where status='Active' and delete_status='0'");
+                                    $sql->execute();
+                                    $qsql = $sql->fetchAll();
+                                    foreach($qsql as $rs)
                                     {
-                                        $temp = $rs['temperature']==null?'<i class="text-warning">Please Update Temperature</i>':'<i class="">'.$rs['temperature'].'</i>';;
+                                        $dob = substr($rs['id_number'],4,2).'-'.substr($rs['id_number'],2,2).'-';
+                                        $year=(substr($rs['id_number'],0,2) <= 22) ? '19': '20'.substr($rs['id_number'],0,2);
+                                        $temp = $rs['blood_pressure']==null?'<i class="text-warning">Please Update Temperature</i>':'<i class="">'.$rs['blood_pressure'].'</i>';;
 
                                         echo "<tr>
-        <td>$rs[patientname]<br>
-        <strong>Email :</strong> $rs[email] </td>
-        <td>
-        <strong>Date</strong>: &nbsp;$rs[admissiondate]<br>
-        <strong>Time</strong>: &nbsp;$rs[admissiontime]</td>
-        <td>$rs[address]<br>
-        Mob No. - $rs[mobileno]</td>
-        <td><strong>ID Number</strong> - $rs[id_number]<br>
-        <strong>Blood group</strong> - $rs[bloodgroup]<br>
-        <strong>Gender</strong> - &nbsp;$rs[gender]<br>
-        <strong>DOB</strong> - &nbsp;$rs[dob]</td>
-        <td><strong>$temp</strong>  </td>
-        <td align='center'>Status - $rs[status] <br>";
+                                                <td><strong>Names : </strong> $rs[fname] $rs[lname]<br>
+                                                <strong>Email :</strong> $rs[email] </td>
+                                                <td><strong>Addr : </strong>$rs[address]<br>
+                                                <strong>Mob No : </strong>$rs[mobileno]</td>
+                                                <td><strong>ID Number</strong> - $rs[id_number]<br>
+                                                <strong>Gender</strong>: &nbsp;$rs[gender]<br>
+                                                <strong>DOB : </strong> $dob$year</td>
+                                                <td><strong>Blood Pressure : </strong>$temp  </td>
+                                                <td align='center'>Status - $rs[status] <br>";
                                         if(isset($_SESSION['user']))
                                         {
                                             echo "<a href='patient.php?editid=$rs[patientid]' class='btn btn-primary'>Edit Temperature</a>";
@@ -129,16 +130,6 @@ if(isset($_GET['delid']))
                                     }
                                     ?>
                                     </tbody>
-                                    <tfoot>
-                                    <tr>
-                                        <th>Patient Name</th>
-                                        <th>Admission details</th>
-                                        <th>Address</th>
-                                        <th>Patient Profile</th>
-                                        <th>Patient Temperature</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </tfoot>
                                 </table>
                             </div>
                         </div>
@@ -159,42 +150,9 @@ if(isset($_GET['delid']))
         </div>
     </div>
 </div>
-</div>
-</div>
-</div>
-</div>
-<?php include('footer.php');?>
-<?php if(!empty($_SESSION['success'])) {  ?>
-    <div class="popup popup--icon -success js_success-popup popup--visible">
-        <div class="popup__background"></div>
-        <div class="popup__content">
-            <h3 class="popup__content__title">
-                Success
-                </h1>
-                <p><?php echo $_SESSION['success']; ?></p>
-                <p>
-                    <?php echo "<script>setTimeout(\"location.href = 'view_user.php';\",1500);</script>"; ?>
-                    <!-- <button class="button button--success" data-for="js_success-popup">Close</button> -->
-                </p>
-        </div>
-    </div>
-    <?php unset($_SESSION["success"]);
-} ?>
-<?php if(!empty($_SESSION['error'])) {  ?>
-    <div class="popup popup--icon -error js_error-popup popup--visible">
-        <div class="popup__background"></div>
-        <div class="popup__content">
-            <h3 class="popup__content__title">
-                Error
-                </h1>
-                <p><?php echo $_SESSION['error']; ?></p>
-                <p>
-                    <?php echo "<script>setTimeout(\"location.href = 'view_user.php';\",1500);</script>"; ?>
-                    <!--  <button class="button button--error" data-for="js_error-popup">Close</button> -->
-                </p>
-        </div>
-    </div>
-    <?php unset($_SESSION["error"]);  } ?>
+
+<?php $pdo->close();include('../pages/alerts.php'); include('footer.php');?>
+
 <script>
     var addButtonTrigger = function addButtonTrigger(el) {
         el.addEventListener('click', function () {
