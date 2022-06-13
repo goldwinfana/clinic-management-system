@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 06, 2022 at 06:16 PM
+-- Generation Time: Jun 13, 2022 at 08:44 AM
 -- Server version: 10.4.16-MariaDB
 -- PHP Version: 7.4.12
 
@@ -52,7 +52,31 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `username`, `email`, `password`, `fname`, `lname`, `gender`, `dob`, `mobileno`, `addr`, `notes`, `image`, `created_on`, `updated_on`, `role_id`, `last_login`, `delete_status`) VALUES
-(1, 'admin', 'admin@gmail.com', 'aa7f019c326413d5b8bcad4314228bcd33ef557f5d81c7cc977f7728156f4357', 'Admin', 'admin', 'Male', '2018-11-26', '9423979339', '<p>Maharashtra, India</p>\r\n', '<p>admin panel</p>\r\n', 'profile.jpg', '2018-04-30', '2019-10-15', 1, '0000-00-00', 0);
+(1, 'admin', 'admin@gmail.com', '12345', 'Admin', 'admin', 'Male', '2018-11-26', '9423979339', '<p>Maharashtra, India</p>\r\n', '<p>admin panel</p>\r\n', 'profile.jpg', '2018-04-30', '2019-10-15', 1, '0000-00-00', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `appointment`
+--
+
+CREATE TABLE `appointment` (
+  `appointmentid` int(11) NOT NULL,
+  `patientid` int(11) NOT NULL,
+  `doctorid` int(11) DEFAULT NULL,
+  `appointment_date` text DEFAULT NULL,
+  `reason` text DEFAULT NULL,
+  `prescription` text DEFAULT NULL,
+  `blood_pressure` text NOT NULL,
+  `app_status` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `appointment`
+--
+
+INSERT INTO `appointment` (`appointmentid`, `patientid`, `doctorid`, `appointment_date`, `reason`, `prescription`, `blood_pressure`, `app_status`) VALUES
+(1, 1, 1, '2022-06-12 10:46:14 AM', 'Massive headache', 'panado', '82', '1');
 
 -- --------------------------------------------------------
 
@@ -101,7 +125,7 @@ CREATE TABLE `doctor` (
 --
 
 INSERT INTO `doctor` (`doctorid`, `doctorname`, `mobileno`, `departmentid`, `email`, `password`, `status`, `education`, `experience`, `consultancy_charge`, `delete_status`) VALUES
-(1, 'Dr Kat', '0710217499', 1, 'doctor@gmail.com', 'aa7f019c326413d5b8bcad4314228bcd33ef557f5d81c7cc977f7728156f4357', 'Active', 'MD', 3.0, 200.00, 0);
+(1, 'Dr Kat', '0710217499', 1, 'doctor@gmail.com', '1234@Abc', 'Active', 'MD', 3.0, 200.00, 0);
 
 -- --------------------------------------------------------
 
@@ -167,7 +191,7 @@ CREATE TABLE `nurse` (
   `email` text NOT NULL,
   `password` text NOT NULL,
   `mobile` text DEFAULT NULL,
-  `status` int(11) DEFAULT NULL
+  `status` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -175,7 +199,7 @@ CREATE TABLE `nurse` (
 --
 
 INSERT INTO `nurse` (`nurseid`, `fname`, `lname`, `email`, `password`, `mobile`, `status`) VALUES
-(1, 'nurse', 'fisrt', 'nurse@gmail.com', 'aa7f019c326413d5b8bcad4314228bcd33ef557f5d81c7cc977f7728156f4357', '0810258254', 1);
+(1, 'nurse', 'fisrt', 'nurse@gmail.com', '1234@Abc', '0810258254', 'Active');
 
 -- --------------------------------------------------------
 
@@ -191,8 +215,6 @@ CREATE TABLE `patient` (
   `address` varchar(250) NOT NULL,
   `mobileno` varchar(15) NOT NULL,
   `pincode` varchar(20) DEFAULT NULL,
-  `prescription` text DEFAULT NULL,
-  `confirm_collection` text DEFAULT NULL,
   `email` varchar(50) NOT NULL,
   `password` text NOT NULL,
   `blood_pressure` text DEFAULT NULL,
@@ -206,9 +228,9 @@ CREATE TABLE `patient` (
 -- Dumping data for table `patient`
 --
 
-INSERT INTO `patient` (`patientid`, `id_number`, `fname`, `lname`, `address`, `mobileno`, `pincode`, `prescription`, `confirm_collection`, `email`, `password`, `blood_pressure`, `gender`, `age`, `status`, `delete_status`) VALUES
-(1, '7802025583087', 'James Bond', '', 'Soshanguve', '9423979339', '1234', 'Panado for the patienc', 'collected', 'goldwinfana5@gmail.com', 'bbcff4db4d8057800d59a68224efd87e545fa1512dfc3ef68298283fbb3b6358', '88,2', 'Female', 19950725, 'Active', 0),
-(2, '7802025583080', 'fana', 'fana', '477 Sisulu Street', '0610217499', NULL, NULL, NULL, 'goldwinfana5@gmail.com', 'f1fb12f160dc4ca8ab66f87074fc1ae47908b4e079c35ce317474b5a85a8878c', NULL, 'male', 24, '0', 0);
+INSERT INTO `patient` (`patientid`, `id_number`, `fname`, `lname`, `address`, `mobileno`, `pincode`, `email`, `password`, `blood_pressure`, `gender`, `age`, `status`, `delete_status`) VALUES
+(1, '7802025583087', 'James ', 'Bond', 'Soshanguve', '9423979339', '1234', 'patient@gmail.com', '1234@Abc', '', 'Female', 19950725, 'Active', 0),
+(2, '7802025583080', 'fana', 'fana', '477 Sisulu Street', '0618710000', NULL, 'ptest@gmail.com', 'f1fb12f160dc4ca8ab66f87074fc1ae47908b4e079c35ce317474b5a85a8878c', '', 'Male', 24, 'Active', 0);
 
 -- --------------------------------------------------------
 
@@ -231,7 +253,7 @@ CREATE TABLE `pharmacy` (
 --
 
 INSERT INTO `pharmacy` (`pharmacyid`, `fname`, `lname`, `email`, `password`, `status`, `mobile`) VALUES
-(1, 'pharmacy', 'pahrs', 'pharmacy@gmail.com', 'aa7f019c326413d5b8bcad4314228bcd33ef557f5d81c7cc977f7728156f4357', 'Active', '0751245555');
+(1, 'pharmacy', 'pahrs', 'pharmacy@gmail.com', '1234@Abc', 'Active', '0751245555');
 
 -- --------------------------------------------------------
 
@@ -308,6 +330,21 @@ CREATE TABLE `user` (
   `createddateandtime` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `visit`
+--
+
+CREATE TABLE `visit` (
+  `visit_id` int(11) NOT NULL,
+  `patientid` int(11) NOT NULL,
+  `date` text NOT NULL,
+  `blood_pressure` text DEFAULT NULL,
+  `prescription` text DEFAULT NULL,
+  `collection` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Indexes for dumped tables
 --
@@ -317,6 +354,12 @@ CREATE TABLE `user` (
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `appointment`
+--
+ALTER TABLE `appointment`
+  ADD PRIMARY KEY (`appointmentid`);
 
 --
 -- Indexes for table `department`
@@ -361,6 +404,12 @@ ALTER TABLE `pharmacy`
   ADD PRIMARY KEY (`pharmacyid`);
 
 --
+-- Indexes for table `visit`
+--
+ALTER TABLE `visit`
+  ADD PRIMARY KEY (`visit_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -369,6 +418,12 @@ ALTER TABLE `pharmacy`
 --
 ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `appointment`
+--
+ALTER TABLE `appointment`
+  MODIFY `appointmentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `department`
@@ -411,6 +466,12 @@ ALTER TABLE `patient`
 --
 ALTER TABLE `pharmacy`
   MODIFY `pharmacyid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `visit`
+--
+ALTER TABLE `visit`
+  MODIFY `visit_id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
