@@ -1,4 +1,4 @@
-AND app_status
+
 <?php require_once('check_login.php');?>
 <?php include('head.php');?>
 <?php include('header.php');?>
@@ -55,7 +55,7 @@ if(isset($_GET['delid']))
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Patient</h4>
+                                    <h4>Doctor</h4>
 
                                 </div>
                             </div>
@@ -89,16 +89,17 @@ if(isset($_GET['delid']))
                                     <thead>
                                     <tr>
                                         <th>Patient Name</th>
+                                        <th>Admission Date</th>
                                         <th>Patient Blood Pressure</th>
                                         <th>Reason</th>
                                         <th>Prescription</th>
-                                        <th>Action</th>
+                                        <th>Status</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <?php
                                     $sql =$init->prepare("SELECT * FROM appointment,patient WHERE appointment.patientid=patient.patientid 
-                                                          AND doctorid='$_SESSION[id]' AND app_status=0");
+                                                          AND doctorid='$_SESSION[id]' AND app_status<>0");
                                     $sql->execute();
                                     $qsql = $sql->fetchAll();
                                     foreach($qsql as $rs)
@@ -109,22 +110,22 @@ if(isset($_GET['delid']))
 
                                         echo "<tr>
                                                 <td><strong>Names : </strong> $rs[fname] $rs[lname]<br>
-                                                <strong>ID Number</strong> - $rs[id_number]<br>
                                                 <strong>Email :</strong> $rs[email] <br>
                                                 <strong>Addr : </strong>$rs[address]<br>
                                                 <strong>Mob No : </strong>$rs[mobileno]<br>
                                                 
                                                 <strong>Gender</strong>: &nbsp;$rs[gender]<br>
                                                 <strong>DOB : </strong> $dob$year</td>
+                                                <td>$rs[appointment_date]</td>
                                                 <td>$temp  </td>
                                                 <td>$rs[reason]</td>
                                                 <td>$rs[prescription]</td>
                                                 <td align='center'>";
-                                        if(!isset($rs['prescription']))
+                                        if($rs['app_status']==0)
                                         {
-                                            echo "<a href='patient.php?editid=$rs[appointmentid]' class='btn btn-primary'>Add Prescription</a>";
+                                            echo "<i class='text-warning'>Pending Medication Collection</i>";
                                         }else{
-                                            echo "<a href='patient.php?editid=$rs[appointmentid]' class='btn btn-warning'>Edit Prescription</a>";
+                                            echo "<i class='text-success'>Collected</i>";
                                         }
                                         echo "</td></tr>";
                                     }

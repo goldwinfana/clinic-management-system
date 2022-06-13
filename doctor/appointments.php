@@ -1,15 +1,13 @@
-AND app_status
-<?php require_once('check_login.php');?>
-<?php include('head.php');?>
-<?php include('header.php');?>
-<?php include('sidebar.php');?>
-<?php include('../connect2.php');
+
+<?php require_once('check_login.php');include('head.php');include('header.php');include('sidebar.php');
+include('../connect2.php');
+
 
 $init = $pdo->open();
-if(isset($_GET['id']))
+if(isset($_GET['attend_app']))
 {
-    $sql =$init->prepare("UPDATE patient SET delete_status='1' WHERE patientid='$_GET[id]'");
-    $qsql=$sql->execute();
+    $sql =$init->prepare("UPDATE appointment SET doctorid=$_SESSION[id] WHERE appointmentid='$_GET[attend_app]'");
+    $sql->execute();
     if($sql->rowCount() > 0)
     {
         ?>
@@ -19,9 +17,10 @@ if(isset($_GET['id']))
                 <h3 class="popup__content__title">
                     Success
                 </h3>
-                <p>Patient record deleted successfully.</p>
+                <p>Appointment successfully updated</p>
                 <p>
-                    <?php echo "<script>setTimeout(\"location.href = 'view-patient.php';\",1500);</script>"; ?>
+                    <!--  <a href="index.php"><button class="button button--success" data-for="js_success-popup"></button></a> -->
+                    <?php echo "<script>setTimeout(\"location.href = 'appointments.php';\",1500);</script>"; ?>
                 </p>
             </div>
         </div>
@@ -35,12 +34,14 @@ if(isset($_GET['delid']))
     <div class="popup popup--icon -question js_question-popup popup--visible">
         <div class="popup__background"></div>
         <div class="popup__content">
-            <h3 class="popup__content__title">Sure</h3>
-            <p>Are You Sure To Delete This Record?</p>
-            <p>
-                <a href="view-patient.php?id=<?php echo $_GET['delid']; ?>" class="button button--success" data-for="js_success-popup">Yes</a>
-                <a href="view-patient.php" class="button button--error" data-for="js_success-popup">No</a>
-            </p>
+            <h3 class="popup__content__title">
+                Sure
+                </h3>
+                <p>Are You Sure To Delete This Record?</p>
+                <p>
+                    <a href="view-patient.php?id=<?php echo $_GET['delid']; ?>" class="button button--success" data-for="js_success-popup">Yes</a>
+                    <a href="view-patient.php" class="button button--error" data-for="js_success-popup">No</a>
+                </p>
         </div>
     </div>
 <?php } ?>
@@ -79,7 +80,8 @@ if(isset($_GET['delid']))
                 <div class="page-body">
 
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header text-center">
+                            <h4 class="">New Appointments</h4>
                             <!-- <h5>DOM/Jquery</h5>
                             <span>Events assigned to the table can be exceptionally useful for user interaction, however you must be aware that DataTables will add and remove rows from the DOM as they are needed (i.e. when paging only the visible elements are actually available in the DOM). As such, this can lead to the odd hiccup when working with events.</span> -->
                         </div>
@@ -88,63 +90,64 @@ if(isset($_GET['delid']))
                                 <table id="dom-jqry" class="table table-striped table-bordered nowrap">
                                     <thead>
                                     <tr>
-                                        <th>Patient Name</th>
-                                        <th>Patient Blood Pressure</th>
-                                        <th>Reason</th>
-                                        <th>Prescription</th>
-                                        <th>Action</th>
+                                        <th>Patient Details</th>
+                                        <th>Appointment Reason</th>
+                                        <th>Blood Pressure</th>
+                                        <th>Status</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <?php
-                                    $sql =$init->prepare("SELECT * FROM appointment,patient WHERE appointment.patientid=patient.patientid 
-                                                          AND doctorid='$_SESSION[id]' AND app_status=0");
+                                    $sql =$init->prepare("SELECT * FROM appointment,patient where patient.patientid=appointment.patientid AND doctorid IS null");
                                     $sql->execute();
                                     $qsql = $sql->fetchAll();
-                                    foreach($qsql as $rs)
-                                    {
-                                        $dob = substr($rs['id_number'],4,2).'-'.substr($rs['id_number'],2,2).'-';
-                                        $year=((substr($rs['id_number'],0,2) > 22) ? '19': '20').substr($rs['id_number'],0,2);
-                                        $temp = $rs['blood_pressure']==null?'<i class="text-warning">Please Update Temperature</i>':'<i class="">'.$rs['blood_pressure'].'</i>';;
-
-                                        echo "<tr>
-                                                <td><strong>Names : </strong> $rs[fname] $rs[lname]<br>
-                                                <strong>ID Number</strong> - $rs[id_number]<br>
-                                                <strong>Email :</strong> $rs[email] <br>
-                                                <strong>Addr : </strong>$rs[address]<br>
-                                                <strong>Mob No : </strong>$rs[mobileno]<br>
-                                                
-                                                <strong>Gender</strong>: &nbsp;$rs[gender]<br>
-                                                <strong>DOB : </strong> $dob$year</td>
-                                                <td>$temp  </td>
-                                                <td>$rs[reason]</td>
-                                                <td>$rs[prescription]</td>
-                                                <td align='center'>";
-                                        if(!isset($rs['prescription']))
+                                    if($sql->rowCount() > 0){
+                                        foreach($qsql as $rs)
                                         {
-                                            echo "<a href='patient.php?editid=$rs[appointmentid]' class='btn btn-primary'>Add Prescription</a>";
-                                        }else{
-                                            echo "<a href='patient.php?editid=$rs[appointmentid]' class='btn btn-warning'>Edit Prescription</a>";
+                                            echo "<tr>
+                                                    <td><strong>Name: $rs[fname] $rs[lname]</strong><br>
+                                                     <strong>ID Number: $rs[id_number]</strong><br>
+                                                     <strong>Mobile: $rs[mobileno]</strong></td>
+                                                      <td>$rs[reason]</td>
+                                                    <td>$rs[blood_pressure]</td>
+                                                    <td align='center'><button class='btn btn-success btn-attend' id='$rs[appointmentid]'>Attend Patient</button></td>
+                                                </tr>";
                                         }
-                                        echo "</td></tr>";
                                     }
+
                                     ?>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-
                 </div>
+                
 
             </div>
         </div>
 
-        <div id="#">
-        </div>
     </div>
 </div>
-<?php include('footer.php');?>
+</div>
+
+
+<div id="app-attend" class="popup popup--icon -question js_question-popup ">
+    <div class="popup__background"></div>
+    <div class="popup__content">
+        <h3 class="popup__content__title">
+            Sure
+        </h3>
+        <p>Are You Sure To Attend This Patient?</p>
+        <p>
+            <a class="button button--success accept_appointment" data-for="js_success-popup">Yes</a>
+            <a href="appointments.php" class="button button--error" data-for="js_success-popup">No</a>
+        </p>
+    </div>
+</div>
+
+
+<?php include('../pages/alerts.php');include('footer.php');?>
 
 <script>
     var addButtonTrigger = function addButtonTrigger(el) {
@@ -156,4 +159,9 @@ if(isset($_GET['delid']))
 
     Array.from(document.querySelectorAll('button[data-for]')).
     forEach(addButtonTrigger);
+
+    $('.btn-attend').on('click',function () {
+        $('.accept_appointment').attr('href','appointments.php?attend_app='+this.id);
+        $('#app-attend').addClass('popup--visible');
+    });
 </script>

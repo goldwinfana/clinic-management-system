@@ -122,7 +122,7 @@
                                     </li>
 
                                     <li>
-                                        <a href="logout.php">
+                                        <a href="../logout.php">
                                             <i class="feather icon-log-out"></i> Logout
                                         </a>
                                     </li>

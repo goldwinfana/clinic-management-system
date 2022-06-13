@@ -6,7 +6,7 @@
                 <div class="pcoded-navigatio-lavel">Navigation</div>
                 <ul class="pcoded-item pcoded-left-item">
                     <li class="">
-                        <a href="view-patient.php">
+                        <a href="index.php">
                             <span class="pcoded-micon"><i class="feather icon-home"></i></span>
                             <span class="pcoded-mtext">Dashboard</span>
                         </a>
@@ -21,7 +21,7 @@
                         </a>
                         <ul class="pcoded-submenu" >
                             <li class="">
-                                <a href="view-patient.php">
+                                <a href="history.php">
                                     <span class="pcoded-mtext">View Patients Prescriptions</span>
                                 </a>
                             </li>
@@ -30,7 +30,7 @@
 
 
                     <li>
-                        <a href="logout.php">
+                        <a href="../logout.php">
                             <i class="feather icon-log-out"></i> Logout
                         </a>
                     </li>

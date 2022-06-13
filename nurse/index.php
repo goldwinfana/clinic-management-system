@@ -1,12 +1,54 @@
-<?php require_once('check_login.php');
- include('head.php');
- include('header.php');
- include('sidebar.php');
- include('../pages/alerts.php');
- include('../connect2.php');
+
+<?php require_once('check_login.php');?>
+<?php include('head.php');?>
+<?php include('header.php');?>
+<?php include('sidebar.php');?>
+<?php include('../connect2.php');
 
 $init = $pdo->open();
- ?>
+if(isset($_GET['id']))
+{
+    $sql =$init->prepare("UPDATE patient SET delete_status='1' WHERE patientid='$_GET[id]'");
+    $qsql=$sql->execute();
+    if($sql->rowCount() > 0)
+    {
+        ?>
+        <div class="popup popup--icon -success js_success-popup popup--visible">
+            <div class="popup__background"></div>
+            <div class="popup__content">
+                <h3 class="popup__content__title">
+                    Success
+                </h3>
+                <p>Patient record deleted successfully.</p>
+                <p>
+                    <!--  <a href="index.php"><button class="button button--success" data-for="js_success-popup"></button></a> -->
+                    <?php echo "<script>setTimeout(\"location.href = 'view-patient.php';\",1500);</script>"; ?>
+                </p>
+            </div>
+        </div>
+        <?php
+        //echo "<script>alert('Dcctor record deleted successfully..');</script>";
+        //echo "<script>window.location='view-patient.php';</script>";
+    }
+}
+?>
+<?php
+if(isset($_GET['delid']))
+{ ?>
+    <div class="popup popup--icon -question js_question-popup popup--visible">
+        <div class="popup__background"></div>
+        <div class="popup__content">
+            <h3 class="popup__content__title">
+                Sure
+            </h3>
+            <p>Are You Sure To Delete This Record?</p>
+            <p>
+                <a href="view-patient.php?id=<?php echo $_GET['delid']; ?>" class="button button--success" data-for="js_success-popup">Yes</a>
+                <a href="view-patient.php" class="button button--error" data-for="js_success-popup">No</a>
+            </p>
+        </div>
+    </div>
+<?php } ?>
 
 <div class="pcoded-content">
     <div class="pcoded-inner-content">
@@ -19,7 +61,7 @@ $init = $pdo->open();
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Patients Prescriptions</h4>
+                                    <h4>Patient</h4>
 
                                 </div>
                             </div>
@@ -28,11 +70,11 @@ $init = $pdo->open();
                             <div class="page-header-breadcrumb">
                                 <ul class="breadcrumb-title">
                                     <li class="breadcrumb-item">
-                                        <a href="dashboard.php"> <i class="feather icon-home"></i> </a>
+                                        <a href="index.php"> <i class="feather icon-home"></i> </a>
                                     </li>
                                     <li class="breadcrumb-item"><a>Patient</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="view_user.php">Patient</a>
+                                    <li class="breadcrumb-item"><a href="index.php">Patient</a>
                                     </li>
                                 </ul>
                             </div>
@@ -55,8 +97,7 @@ $init = $pdo->open();
                                         <th>Patient Name</th>
                                         <th>Admission details</th>
                                         <th>Address</th>
-                                        <th>Patient Blood</th>
-                                        <th>Prescription</th>
+                                        <th>Patient Blood Pressure</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -79,21 +120,18 @@ $init = $pdo->open();
                                                 <td><strong>ID Number</strong> - $rs[id_number]<br>
                                                 <strong>Gender</strong>: &nbsp;$rs[gender]<br>
                                                 <strong>DOB : </strong> $dob$year</td>
-                                                <td><strong>$temp </strong>  </td>
-                                                <td><strong>$rs[prescription] </strong> </td>
+                                                <td><strong>Blood Pressure : </strong>$temp  </td>
                                                 <td align='center'>Status - $rs[status] <br>";
                                         if(isset($_SESSION['user']))
                                         {
-                                            echo "<a href='patient.php?confirm_collection=$rs[id_number]' class='btn btn-primary'>Confirm Collection</a>";
+                                            echo "<a href='patient.php?editid=$rs[patientid]' class='btn btn-primary'>Edit Temperature</a>";
                                         }
                                         echo "</td></tr>";
                                     }
                                     ?>
                                     </tbody>
                                 </table>
-
                             </div>
-
                         </div>
                     </div>
 
@@ -112,11 +150,8 @@ $init = $pdo->open();
         </div>
     </div>
 </div>
-</div>
-</div>
-</div>
-</div>
-<?php include('footer.php');?>
+
+<?php $pdo->close();include('../pages/alerts.php'); include('footer.php');?>
 
 <script>
     var addButtonTrigger = function addButtonTrigger(el) {

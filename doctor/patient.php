@@ -9,7 +9,7 @@ if(isset($_POST['btn_submit']))
 {
     if(isset($_GET['editid']))
     {
-        $sql =$init->prepare("UPDATE patient SET prescription='$_POST[prescription]' WHERE id_number='$_GET[editid]'");
+        $sql =$init->prepare("UPDATE appointment SET prescription='$_POST[prescription]' WHERE appointmentid='$_GET[editid]'");
         $sql->execute();
 
         if($sql->rowCount() > 0)
@@ -37,9 +37,13 @@ if(isset($_POST['btn_submit']))
 }
 if(isset($_GET['editid']))
 {
-    $sql =$init->prepare("SELECT * FROM patient WHERE id_number='$_GET[editid]'");
-    $qsql=$sql->execute();
-    $rsedit = $sql->fetch();
+    $sql =$init->prepare("SELECT * FROM appointment WHERE appointmentid='$_GET[editid]'");
+    $sql->execute();
+    $rsedit = '';
+    if($sql->rowCount() > 0){
+        $rsedit = $sql->fetch()['prescription'];
+    }
+
 }
 
 ?>
@@ -90,13 +94,11 @@ if(isset($_GET['editid']))
                                 <div class="card-block">
                                     <form id="main" method="post" action="" enctype="multipart/form-data">
 
-
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Prescription Details</label>
                                             <div class="col-sm-8">
-                                             <textarea class="form-control" rows="12" type="text" placeholder="Type patient prescription here..." name="prescription" id="prescription"
-                                                       value="<?php if(isset($_GET['editid'])) {  echo $rsedit['prescription']; } ?>"></textarea>
-                                                <span class="messages"></span>
+                                             <textarea class="form-control" rows="12" type="text" placeholder="Type patient prescription here..." name="prescription"
+                                                       value="<?php echo $rsedit;?>"></textarea>
                                             </div>
 
                                         </div>

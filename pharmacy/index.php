@@ -1,9 +1,6 @@
-AND app_status
-<?php require_once('check_login.php');?>
-<?php include('head.php');?>
-<?php include('header.php');?>
-<?php include('sidebar.php');?>
-<?php include('../connect2.php');
+
+<?php require_once('check_login.php');include('head.php');include('header.php');include('sidebar.php');
+include('../connect2.php');
 
 $init = $pdo->open();
 if(isset($_GET['id']))
@@ -21,7 +18,7 @@ if(isset($_GET['id']))
                 </h3>
                 <p>Patient record deleted successfully.</p>
                 <p>
-                    <?php echo "<script>setTimeout(\"location.href = 'view-patient.php';\",1500);</script>"; ?>
+                    <?php echo "<script>setTimeout(\"location.href = 'index.php';\",1500);</script>"; ?>
                 </p>
             </div>
         </div>
@@ -55,7 +52,7 @@ if(isset($_GET['delid']))
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Patient</h4>
+                                    <h4>Pharmacy</h4>
 
                                 </div>
                             </div>
@@ -68,7 +65,7 @@ if(isset($_GET['delid']))
                                     </li>
                                     <li class="breadcrumb-item"><a>Patient</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="view_user.php">Patient</a>
+                                    <li class="breadcrumb-item"><a href="index.php">Appointment</a>
                                     </li>
                                 </ul>
                             </div>
@@ -79,9 +76,8 @@ if(isset($_GET['delid']))
                 <div class="page-body">
 
                     <div class="card">
-                        <div class="card-header">
-                            <!-- <h5>DOM/Jquery</h5>
-                            <span>Events assigned to the table can be exceptionally useful for user interaction, however you must be aware that DataTables will add and remove rows from the DOM as they are needed (i.e. when paging only the visible elements are actually available in the DOM). As such, this can lead to the odd hiccup when working with events.</span> -->
+                        <div class="card-header text-center">
+                            <h3>New Appointments</h3>
                         </div>
                         <div class="card-block">
                             <div class="table-responsive dt-responsive">
@@ -120,11 +116,8 @@ if(isset($_GET['delid']))
                                                 <td>$rs[reason]</td>
                                                 <td>$rs[prescription]</td>
                                                 <td align='center'>";
-                                        if(!isset($rs['prescription']))
-                                        {
-                                            echo "<a href='patient.php?editid=$rs[appointmentid]' class='btn btn-primary'>Add Prescription</a>";
-                                        }else{
-                                            echo "<a href='patient.php?editid=$rs[appointmentid]' class='btn btn-warning'>Edit Prescription</a>";
+                                        if(isset($rs['prescription'])) {
+                                            echo "<a href='patient.php?confirm_collection=$rs[appointmentid]' class='btn btn-primary'>Confirm Collection</a>";
                                         }
                                         echo "</td></tr>";
                                     }
@@ -144,7 +137,7 @@ if(isset($_GET['delid']))
         </div>
     </div>
 </div>
-<?php include('footer.php');?>
+<?php include('../pages/alerts.php');include('footer.php');?>
 
 <script>
     var addButtonTrigger = function addButtonTrigger(el) {
@@ -157,3 +150,4 @@ if(isset($_GET['delid']))
     Array.from(document.querySelectorAll('button[data-for]')).
     forEach(addButtonTrigger);
 </script>
+

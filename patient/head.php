@@ -5,7 +5,7 @@
 
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
-<title>Nurse Panel</title>
+<title>Patient Panel</title>
 
 
 <meta charset="utf-8">
@@ -13,18 +13,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="description" content="#">
 <meta name="keywords" content="Clinic Management System">
-<?php
-  include('connect.php');
-$que="select * from manage_website";
-$query=$conn->query($que);
-while($row=mysqli_fetch_array($query))
-{
-  //print_r($row);
-  extract($row);
-  $logo = $row['logo'];
-}
-?>
-<link rel="icon" href="uploadImage/Logo/<?php echo $logo; ?>" type="image/x-icon">
+
+<link rel="icon" href="uploadImage/Logo/hoslogo.jpg" type="image/x-icon">
 <link href="../files/assets/css/lib/bootstrap/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
 
@@ -50,5 +40,5 @@ while($row=mysqli_fetch_array($query))
 
 <link rel="stylesheet" type="text/css" href="../files/assets/css/jquery.mCustomScrollbar.css">
 
-<link rel="stylesheet" href="popup_style.css">
+<link rel="stylesheet" href="../popup_style.css">
 </head>

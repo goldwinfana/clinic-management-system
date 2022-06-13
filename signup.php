@@ -1,14 +1,11 @@
 
-<!-- Author Name: Nikhil Bhalerao +919423979339. 
-PHP, Laravel and Codeignitor Developer
--->
 <!DOCTYPE html>
 <html lang="en">
 <link rel="stylesheet" href="popup_style.css">
 <?php include('connect.php');include('pages/alerts.php');?>
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
-    <title>Admin Panel</title>
+    <title>Registration Panel</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">

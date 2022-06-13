@@ -6,7 +6,7 @@
                 <div class="pcoded-navigatio-lavel">Navigation</div>
                 <ul class="pcoded-item pcoded-left-item">
                     <li class="">
-                        <a href="view-patient.php">
+                        <a href="appointments.php">
                             <span class="pcoded-micon"><i class="feather icon-home"></i></span>
                             <span class="pcoded-mtext">Dashboard</span>
                         </a>
@@ -17,17 +17,18 @@
                     <li class="pcoded-hasmenu" >
                         <a href="javascript:void(0)">
                             <span class="pcoded-micon"><i class="feather icon-user"></i></span>
-                            <span class="pcoded-mtext">Patients</span>
+                            <span class="pcoded-mtext">Appointments</span>
                         </a>
                         <ul class="pcoded-submenu" >
-                            <li class="" hidden>
-                                <a href="patient.php">
-                                    <span class="pcoded-mtext">Add Patient</span>
-                                </a>
-                            </li>
+
                             <li class="">
                                 <a href="view-patient.php">
-                                    <span class="pcoded-mtext">View Patients Records</span>
+                                    <span class="pcoded-mtext">New Appointments</span>
+                                </a>
+                            </li>
+                            <li class="" >
+                                <a href="history.php">
+                                    <span class="pcoded-mtext">Historic Appointments</span>
                                 </a>
                             </li>
                         </ul>

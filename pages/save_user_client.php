@@ -17,11 +17,62 @@ if(isset($_POST['btn_signup'])){
         header('location: ../signup.php');
         exit(0);
     }
+    $email=$_POST['email'];
+
+    $sql = $init->prepare("SELECT * FROM admin WHERE email = :email");
+    $sql->execute(['email'=>$email]);
+    $row = $sql->fetch();
+
+    if($sql->rowCount() >0){
+        $_SESSION['error']= 'Email already exists.';
+        header('location: '.$return);
+        exit(0);
+    }
+
+    $sql = $init->prepare("SELECT * FROM nurse WHERE email = :email");
+    $sql->execute(['email'=>$email]);
+    $row = $sql->fetch();
+
+    if($sql->rowCount() >0){
+        $_SESSION['error']= 'Email already exists.';
+        header('location: '.$return);
+        exit(0);
+    }
+
+    $sql = $init->prepare("SELECT * FROM doctor WHERE email = :email");
+    $sql->execute(['email'=>$email]);
+    $row = $sql->fetch();
+
+    if($sql->rowCount() >0){
+        $_SESSION['error']= 'Email already exists.';
+        header('location: '.$return);
+        exit(0);
+    }
+
+    $sql = $init->prepare("SELECT * FROM pharmacy WHERE email = :email");
+    $sql->execute(['email'=>$email]);
+    $row = $sql->fetch();
+
+    if($sql->rowCount() >0){
+        $_SESSION['error']= 'Email already exists.';
+        header('location: '.$return);
+        exit(0);
+    }
+
+    $sql = $init->prepare("SELECT * FROM patient WHERE email = :email");
+    $sql->execute(['email'=>$email]);
+    $row = $sql->fetch();
+
+    if($sql->rowCount() >0){
+        $_SESSION['error']= 'Email already exists.';
+        header('location: '.$return);
+        exit(0);
+    }
 
     $passw = hash('sha256', $_POST['password']);
 
     $salt = createSalt();
-    $pass = hash('sha256', $salt . $passw);
+    $pass = $_POST['password'];
     $id = $_POST['id_number'];
     $month = substr($id,2,2);
     $day = substr($id,4,2);
@@ -55,7 +106,7 @@ if(isset($_POST['btn_login']))
     $passw = hash('sha256', $_POST['password']);
 
     $salt = createSalt();
-    $pass = hash('sha256', $salt . $passw);
+    $pass = $_POST['password'];
     $url='index.php';
 
     if($_POST['user'] == 'admin'){
@@ -114,7 +165,7 @@ if(isset($_POST['btn_login']))
                 $_SESSION["email"] = $row['email'];
                 $_SESSION["fname"] = $row['fname'];
                 $_SESSION['user'] = $_POST['user'];
-                $url = '../pharmacy/view-patient.php';
+                $url = '../pharmacy/';
             }
 
         }
@@ -136,7 +187,7 @@ if(isset($_POST['btn_login']))
                 $_SESSION["fname"] = $row['fname'];
                 $_SESSION["lname"] = $row['lname'];
                 $_SESSION['user'] = $_POST['user'];
-                $url = 'patient/profile.php';
+                $url = '../patient/';
             }
 
         }
@@ -157,7 +208,7 @@ if(isset($_POST['btn_login']))
                 $_SESSION["email"] = $row['email'];
                 $_SESSION["fname"] = $row['fname'];
                 $_SESSION['user'] = $_POST['user'];
-                $url = '../nurse/view-patient.php';
+                $url = '../nurse/index.php';
             }
 
         }

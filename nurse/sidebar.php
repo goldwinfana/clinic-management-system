@@ -6,7 +6,7 @@
                 <div class="pcoded-navigatio-lavel">Navigation</div>
                 <ul class="pcoded-item pcoded-left-item">
                     <li class="">
-                        <a href="view-patient.php">
+                        <a href="index.php">
                             <span class="pcoded-micon"><i class="feather icon-home"></i></span>
                             <span class="pcoded-mtext">Dashboard</span>
                         </a>
@@ -26,7 +26,7 @@
                                 </a>
                             </li>
                             <li class="">
-                                <a href="view-patient.php">
+                                <a href="index.php">
                                     <span class="pcoded-mtext">View Patients Records</span>
                                 </a>
                             </li>

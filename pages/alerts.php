@@ -11,7 +11,7 @@ if(session_status() < 2){
                  Error
              </h3>
              <p class="text-danger"><?php echo $_SESSION['error']; ?></p>
-             <button class="button button--error" data-for="js_error-popup">Close</button>
+             <button class="button button--error" data-for="js_error-popup" onclick="$('.popup').hide()">Close</button>
 
          </div>
      </div>

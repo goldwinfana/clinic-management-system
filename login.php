@@ -51,7 +51,7 @@
   <form method="POST" action="pages/save_user_client.php">
     <div class="form-group form-primary">
       <select name="user" class="form-control" required="">
-        <option value="">-- Select One --</option>
+        <option value="" selected disabled>-- Select One --</option>
         <option value="admin">Admin</option>
           <option value="nurse">Nurse</option>
         <option value="doctor">Doctor</option>

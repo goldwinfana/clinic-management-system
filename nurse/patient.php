@@ -23,7 +23,7 @@ if(isset($_POST['btn_submit']))
                     <p>Patient Record Updated Successfully</p>
                     <p>
                         <!--  <a href="index.php"><button class="button button--success" data-for="js_success-popup"></button></a> -->
-                        <?php echo "<script>setTimeout(\"location.href = 'view-patient.php';\",1500);</script>"; ?>
+                        <?php echo "<script>setTimeout(\"location.href = 'index.php';\",1500);</script>"; ?>
                     </p>
                 </div>
             </div>

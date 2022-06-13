@@ -1,26 +1,5 @@
 
-<?php include('connect.php');?>
 <body>
-<?php
-$que="select * from manage_website";
-$query=$conn->query($que);
-while($row=mysqli_fetch_array($query))
-{
-    //print_r($row);
-    extract($row);
-    $business_name = $row['business_name'];
-    $business_email = $row['business_email'];
-    $business_web = $row['business_web'];
-    $portal_addr = $row['portal_addr'];
-    $addr = $row['addr'];
-    $curr_sym = $row['curr_sym'];
-    $curr_position = $row['curr_position'];
-    $front_end_en = $row['front_end_en'];
-    $date_format = $row['date_format'];
-    $def_tax = $row['def_tax'];
-    $logo = $row['logo'];
-}
-?>
 
 <div class="theme-loader">
     <div class="ball-scale">
@@ -69,7 +48,7 @@ while($row=mysqli_fetch_array($query))
                     <a href="dashboard.php">
 
                         <div class="text-center">
-                            <image class="profile-img" src="../uploadImage/Logo/<?php echo $logo; ?>" style="width: 50%"></image>
+                            <img class="profile-img" src="../uploadImage/Logo/hoslogo.jpg" style="width: 50%">
                         </div>
                     </a>
                     <a class="mobile-options">
@@ -167,4 +146,3 @@ while($row=mysqli_fetch_array($query))
                 </div>
             </div>
         </nav>
-

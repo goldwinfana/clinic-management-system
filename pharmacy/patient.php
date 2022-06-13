@@ -1,15 +1,13 @@
-<?php require_once('check_login.php');
- include('head.php');
- include('header.php');
- include('sidebar.php');
-    include('../connect2.php');
+
+<?php require_once('check_login.php');include('head.php');include('header.php');include('sidebar.php');
+include('../connect2.php');
 
     $init = $pdo->open();
 
 if(isset($_GET['confirm_collection']))
 {
-    $sql =$init->prepare("SELECT * FROM patient WHERE id_number='$_GET[confirm_collection]'");
-    $qsql=$sql->execute();
+    $sql =$init->prepare("SELECT * FROM appointment WHERE appointmentid='$_GET[confirm_collection]'");
+    $sql->execute();
     $rsedit = $sql->fetch();
 
 }
@@ -63,12 +61,16 @@ if(isset($_GET['confirm_collection']))
 
                                     <div class="card-block">
                                         <div class="table-responsive dt-responsive">
+                                            <?php if($sql->rowCount() > 0){?>
                                             <h5>Please click on the confirm button below to confirm that the patient has collected the prescibed medication.</h5>
                                             <textarea class="form-control black" placeholder="<?php echo $rsedit['prescription']?>" style="width: 100%" disabled></textarea><br>
                                             <form method="post" action="sql.php">
                                                 <input name="confirm_collection" value="<?php echo $_GET['confirm_collection'] ?>" hidden>
                                                 <button class="btn btn-success">Confirm Collection</button>
                                             </form>
+                                            <?php }else{
+                                                echo "<h5>Not Found</h5>";
+                                            }?>
 
                                         </div>
                                     </div>
@@ -85,7 +87,7 @@ if(isset($_GET['confirm_collection']))
 </div>
 
 
-<?php include('footer.php');?>
+<?php include('../pages/alerts.php');include('footer.php');?>
 
 <script type="text/javascript">
     $('#main').keyup(function(){

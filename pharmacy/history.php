@@ -1,9 +1,6 @@
-AND app_status
-<?php require_once('check_login.php');?>
-<?php include('head.php');?>
-<?php include('header.php');?>
-<?php include('sidebar.php');?>
-<?php include('../connect2.php');
+
+<?php require_once('check_login.php');include('head.php');include('header.php');include('sidebar.php');
+include('../connect2.php');
 
 $init = $pdo->open();
 if(isset($_GET['id']))
@@ -21,7 +18,7 @@ if(isset($_GET['id']))
                 </h3>
                 <p>Patient record deleted successfully.</p>
                 <p>
-                    <?php echo "<script>setTimeout(\"location.href = 'view-patient.php';\",1500);</script>"; ?>
+                    <?php echo "<script>setTimeout(\"location.href = 'index.php';\",1500);</script>"; ?>
                 </p>
             </div>
         </div>
@@ -55,7 +52,7 @@ if(isset($_GET['delid']))
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Patient</h4>
+                                    <h4>Doctor</h4>
 
                                 </div>
                             </div>
@@ -68,7 +65,7 @@ if(isset($_GET['delid']))
                                     </li>
                                     <li class="breadcrumb-item"><a>Patient</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="view_user.php">Patient</a>
+                                    <li class="breadcrumb-item"><a href="index.php">Appointment</a>
                                     </li>
                                 </ul>
                             </div>
@@ -79,9 +76,8 @@ if(isset($_GET['delid']))
                 <div class="page-body">
 
                     <div class="card">
-                        <div class="card-header">
-                            <!-- <h5>DOM/Jquery</h5>
-                            <span>Events assigned to the table can be exceptionally useful for user interaction, however you must be aware that DataTables will add and remove rows from the DOM as they are needed (i.e. when paging only the visible elements are actually available in the DOM). As such, this can lead to the odd hiccup when working with events.</span> -->
+                        <div class="card-header text-center">
+                             <h3>Past Appointments</h3>
                         </div>
                         <div class="card-block">
                             <div class="table-responsive dt-responsive">
@@ -89,42 +85,44 @@ if(isset($_GET['delid']))
                                     <thead>
                                     <tr>
                                         <th>Patient Name</th>
+                                        <th>Admission Date</th>
                                         <th>Patient Blood Pressure</th>
                                         <th>Reason</th>
                                         <th>Prescription</th>
-                                        <th>Action</th>
+                                        <th>Status</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <?php
-                                    $sql =$init->prepare("SELECT * FROM appointment,patient WHERE appointment.patientid=patient.patientid 
-                                                          AND doctorid='$_SESSION[id]' AND app_status=0");
+                                    $sql =$init->prepare("SELECT *,appointment.blood_pressure AS blood_pres 
+                                                          FROM appointment,patient WHERE appointment.patientid=patient.patientid 
+                                                          AND doctorid='$_SESSION[id]' AND app_status<>0");
                                     $sql->execute();
                                     $qsql = $sql->fetchAll();
                                     foreach($qsql as $rs)
                                     {
                                         $dob = substr($rs['id_number'],4,2).'-'.substr($rs['id_number'],2,2).'-';
                                         $year=((substr($rs['id_number'],0,2) > 22) ? '19': '20').substr($rs['id_number'],0,2);
-                                        $temp = $rs['blood_pressure']==null?'<i class="text-warning">Please Update Temperature</i>':'<i class="">'.$rs['blood_pressure'].'</i>';;
+                                        $temp = $rs['blood_pres']==null?'<i class="text-warning">Please Update Temperature</i>':'<i class="">'.$rs['blood_pres'].'</i>';;
 
                                         echo "<tr>
                                                 <td><strong>Names : </strong> $rs[fname] $rs[lname]<br>
-                                                <strong>ID Number</strong> - $rs[id_number]<br>
                                                 <strong>Email :</strong> $rs[email] <br>
                                                 <strong>Addr : </strong>$rs[address]<br>
                                                 <strong>Mob No : </strong>$rs[mobileno]<br>
                                                 
                                                 <strong>Gender</strong>: &nbsp;$rs[gender]<br>
                                                 <strong>DOB : </strong> $dob$year</td>
+                                                <td>$rs[appointment_date]</td>
                                                 <td>$temp  </td>
                                                 <td>$rs[reason]</td>
                                                 <td>$rs[prescription]</td>
                                                 <td align='center'>";
-                                        if(!isset($rs['prescription']))
+                                        if($rs['app_status']==0)
                                         {
-                                            echo "<a href='patient.php?editid=$rs[appointmentid]' class='btn btn-primary'>Add Prescription</a>";
+                                            echo "<i class='text-warning'>Pending Medication Collection</i>";
                                         }else{
-                                            echo "<a href='patient.php?editid=$rs[appointmentid]' class='btn btn-warning'>Edit Prescription</a>";
+                                            echo "<i class='text-success'>Collected</i>";
                                         }
                                         echo "</td></tr>";
                                     }
