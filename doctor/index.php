@@ -6,10 +6,23 @@
 <?php include('../connect2.php');
 
 $init = $pdo->open();
-if(isset($_GET['id']))
+if(isset($_GET['confirm_blood_id']))
 {
-    $sql =$init->prepare("UPDATE patient SET delete_status='1' WHERE patientid='$_GET[id]'");
+    $sql =$init->prepare("UPDATE patient SET blood_pressure='$_GET[confirm_blood]' WHERE patientid='$_GET[confirm_blood_id]'");
     $qsql=$sql->execute();
+	
+		$sql =$init->prepare("SELECT * from appointment where patientid='$_GET[confirm_blood_id]' and app_status=0");
+        $sql->execute();
+        $records = $sql->fetchAll();
+
+        foreach($records as $rec){
+
+          if( substr($rec['appointment_date'],strpos($rec['appointment_date'],"- ")+2,8) > date('H:i:s')){
+             $sql =$init->prepare("UPDATE appointment SET blood_pressure='$_GET[confirm_blood]', APP_STATUS=1 where appointmentid='$rec[appointmentid]'");
+             $sql->execute();
+          }
+        }
+	
     if($sql->rowCount() > 0)
     {
         ?>
@@ -19,33 +32,37 @@ if(isset($_GET['id']))
                 <h3 class="popup__content__title">
                     Success
                 </h3>
-                <p>Patient record deleted successfully.</p>
+                <p>Patient record updated successfully.</p>
                 <p>
-                    <!--  <a href="index.php"><button class="button button--success" data-for="js_success-popup"></button></a> -->
                     <?php echo "<script>setTimeout(\"location.href = 'view-patient.php';\",1500);</script>"; ?>
                 </p>
             </div>
         </div>
         <?php
-        //echo "<script>alert('Dcctor record deleted successfully..');</script>";
-        //echo "<script>window.location='view-patient.php';</script>";
     }
 }
 ?>
 <?php
-if(isset($_GET['delid']))
+if(isset($_GET['edit_blood']))
 { ?>
-    <div class="popup popup--icon -question js_question-popup popup--visible">
-        <div class="popup__background"></div>
+    <div class="popup popup--icon -blood js_blood-popup popup--visible">
+       
         <div class="popup__content">
             <h3 class="popup__content__title">
-                Sure
+                Edit Patient Blood Pressure
             </h3>
-            <p>Are You Sure To Delete This Record?</p>
-            <p>
-                <a href="view-patient.php?id=<?php echo $_GET['delid']; ?>" class="button button--success" data-for="js_success-popup">Yes</a>
-                <a href="view-patient.php" class="button button--error" data-for="js_success-popup">No</a>
-            </p>
+			<form class="" action="index.php" method="get">
+				<input name="confirm_blood_id" value="<?php echo $_GET['edit_blood']?>" class="form-control" required="" hidden>
+				<input name="confirm_blood" class="form-control" required >
+					<br></br>
+				<p>
+					<button class="button button--sucsess" type="submit">
+						Confirm
+					</button>
+					<a href="index.php" class="button button--error" data-for="js_success-popup" style="margin-left:5px">Cancel</a>
+				</p>
+			</form>
+            
         </div>
     </div>
 <?php } ?>
@@ -103,7 +120,8 @@ if(isset($_GET['delid']))
                                     </thead>
                                     <tbody>
                                     <?php
-                                    $sql =$init->prepare("SELECT * FROM patient where status='Active' and delete_status='0'");
+									
+                                    $sql =$init->prepare("SELECT * FROM patient a,appointment b where app_status=0 and a.patientid=b.patientid and doctorid='$_SESSION[id]'");
                                     $sql->execute();
                                     $qsql = $sql->fetchAll();
                                     foreach($qsql as $rs)
@@ -133,10 +151,11 @@ if(isset($_GET['delid']))
                                                 <td align='center'>Status - $rs[status] <br>";
                                         if(isset($_SESSION['user']))
                                         {
-                                            echo "<a href='patient.php?editid=$rs[patientid]' class='btn btn-primary'>Edit Temperature</a>";
+                                            echo "<a href='index.php?edit_blood=$rs[patientid]' class='btn btn-primary'>Add Temperature</a>";
                                         }
                                         echo "</td></tr>";
                                     }
+								
                                     ?>
                                     </tbody>
                                 </table>

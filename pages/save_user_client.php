@@ -191,27 +191,6 @@ if(isset($_POST['btn_login']))
             }
 
         }
-    }else if($_POST['user'] == 'nurse'){
-        $sql = $init->prepare("SELECT * FROM nurse WHERE email='" .$email . "' and password = '". $pass."'");
-        $result = $sql->execute();
-        $row  = $sql->fetch();
-        $count=$sql->rowCount();
-        if($sql->rowCount() > 0) {
-            if($row['status']!='Active'){
-                $_SESSION['error'] = 'Account not yet active';
-                header('location: ../login.php');
-                exit(0);
-            }else{
-
-                $_SESSION["id"] = $row['nurseid'];
-                $_SESSION["password"] = $row['password'];
-                $_SESSION["email"] = $row['email'];
-                $_SESSION["fname"] = $row['fname'];
-                $_SESSION['user'] = $_POST['user'];
-                $url = '../nurse/index.php';
-            }
-
-        }
     }
 
     if($count==1 && isset($_SESSION["email"]) && isset($_SESSION["password"])) {

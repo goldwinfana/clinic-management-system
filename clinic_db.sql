@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2023 at 01:01 PM
+-- Generation Time: May 09, 2023 at 08:45 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -80,7 +80,7 @@ INSERT INTO `appointment` (`appointmentid`, `patientid`, `doctorid`, `appointmen
 (1, 1, 1, '2022-06-12 10:46:14 AM', 'Massive headache', 'panado', '82', '2023-05-08 17:36:31', '3'),
 (3, 1, 1, '180016', 'Checking ', NULL, '15', '2023-05-08 17:36:31', '4'),
 (4, 1, 1, '10:00:00 - 11:00:00', 'Testing', 'Meds', '15', '2023-05-08 17:36:31', '4'),
-(5, 1, 1, '19:00:00 - 20:00:00', 'Test2', 'testing', '22', '2023-05-09 17:36:31', '3');
+(5, 1, 1, '20:00:00 - 21:00:00', 'Test2', 'Check again pills', '12.5', '2023-05-09 17:36:31', '2');
 
 -- --------------------------------------------------------
 
@@ -159,8 +159,8 @@ INSERT INTO `doctor_timings` (`doctor_timings_id`, `doctorid`, `start_time`, `en
 (7, 1, '14:00:00', '15:00:00', 'Available'),
 (8, 1, '15:00:00', '16:00:00', 'Available'),
 (9, 1, '16:00:00', '17:00:00', 'Available'),
-(10, 1, '17:00:00', '18:00:00', 'Booked'),
-(11, 1, '19:00:00', '20:00:00', 'Booked'),
+(10, 1, '17:00:00', '18:00:00', 'Available'),
+(11, 1, '19:00:00', '20:00:00', 'Available'),
 (12, 1, '20:00:00', '21:00:00', 'Booked');
 
 -- --------------------------------------------------------
@@ -194,29 +194,6 @@ INSERT INTO `manage_website` (`id`, `business_name`, `business_email`, `business
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nurse`
---
-
-CREATE TABLE `nurse` (
-  `nurseid` int(11) NOT NULL,
-  `fname` text NOT NULL,
-  `lname` text NOT NULL,
-  `email` text NOT NULL,
-  `password` text NOT NULL,
-  `mobile` text DEFAULT NULL,
-  `status` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `nurse`
---
-
-INSERT INTO `nurse` (`nurseid`, `fname`, `lname`, `email`, `password`, `mobile`, `status`) VALUES
-(1, 'nurse', 'fisrt', 'nurse@gmail.com', '1234@Abc', '0810258254', 'Active');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `patient`
 --
 
@@ -242,7 +219,7 @@ CREATE TABLE `patient` (
 --
 
 INSERT INTO `patient` (`patientid`, `id_number`, `fname`, `lname`, `address`, `mobileno`, `pincode`, `email`, `password`, `blood_pressure`, `gender`, `age`, `status`, `delete_status`) VALUES
-(1, '7802025583087', 'James ', 'Bond', 'Soshanguve', '9423979339', '1234', 'patient@gmail.com', '1234@Abc', '', 'Female', 19950725, 'Active', 0),
+(1, '7802025583087', 'James ', 'Bond', 'Soshanguve', '9423979339', '1234', 'patient@gmail.com', '1234@Abc', '12.5', 'Female', 19950725, 'Active', 0),
 (2, '7802025583080', 'fana', 'fana', '477 Sisulu Street', '0618710000', NULL, 'ptest@gmail.com', 'f1fb12f160dc4ca8ab66f87074fc1ae47908b4e079c35ce317474b5a85a8878c', '', 'Male', 24, 'Active', 0);
 
 -- --------------------------------------------------------
@@ -399,12 +376,6 @@ ALTER TABLE `manage_website`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `nurse`
---
-ALTER TABLE `nurse`
-  ADD PRIMARY KEY (`nurseid`);
-
---
 -- Indexes for table `patient`
 --
 ALTER TABLE `patient`
@@ -461,12 +432,6 @@ ALTER TABLE `doctor_timings`
 --
 ALTER TABLE `manage_website`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `nurse`
---
-ALTER TABLE `nurse`
-  MODIFY `nurseid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `patient`

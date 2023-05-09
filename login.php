@@ -53,7 +53,6 @@
       <select name="user" class="form-control" required="">
         <option value="" selected disabled>-- Select One --</option>
         <option value="admin">Admin</option>
-          <option value="nurse">Nurse</option>
         <option value="doctor">Doctor</option>
         <option value="pharmacy">Pharmacy</option>
           <option value="patient">Patient</option>
