@@ -1,9 +1,22 @@
-
 <?php require_once('check_login.php');include('head.php');include('header.php');include('sidebar.php');
 include('../connect2.php');
 
 
 $init = $pdo->open();
+
+
+$sql =$init->prepare("SELECT * from appointment where patientid='$_SESSION[id]'");
+$sql->execute();
+$records = $sql->fetchAll();
+
+foreach($records as $rec){
+
+  if($rec['booking_date'] < date('Y-m-d H:i:s') && $rec['app_status'] <3 OR substr($rec['appointment_date'],strpos($rec['appointment_date'],"- ")+2,8) < date('H:i:s') && $rec['app_status'] <3){
+     $sql =$init->prepare("UPDATE appointment SET APP_STATUS=4 where appointmentid='$rec[appointmentid]'");
+     $sql->execute();
+  }
+}
+
 if(isset($_GET['appointment']))
 {
     $date = date('Y-m-d H:i:s A');
@@ -118,6 +131,7 @@ if(isset($_GET['delid']))
                                     <thead>
                                     <tr>
                                         <th>Appointment Reason</th>
+										<th>Appointment Time</th>
                                         <th>Doctor Details</th>
                                         <th>Blood Pressure</th>
                                         <th>Status</th>
@@ -125,7 +139,7 @@ if(isset($_GET['delid']))
                                     </thead>
                                     <tbody>
                                     <?php
-                                    $sql =$init->prepare("SELECT * FROM appointment where patientid='$_SESSION[id]'");
+                                    $sql =$init->prepare("SELECT * FROM appointment a,doctor b where patientid='$_SESSION[id]' AND a.doctorid=b.doctorid AND app_status NOT IN (3,4)");
                                     $sql->execute();
                                     $qsql = $sql->fetchAll();
                                     if($sql->rowCount() > 0){
@@ -133,9 +147,19 @@ if(isset($_GET['delid']))
                                         {
                                             echo "<tr>
                                                 <td>$rs[reason]</td>
-                                                <td class='text-warning'><strong>Awaiting Doctor</strong></td>
-                                                <td>$rs[blood_pressure]</td>
-                                                <td align='center'>Status - $rs[app_status] <br></td></tr>";
+												<td>$rs[appointment_date]</td>
+                                                <td>Name: $rs[doctorname]<br>Mobile: $rs[mobileno]<br>Email: $rs[email]</td>
+                                                <td>$rs[blood_pressure]</td>";
+                                                if($rs['app_status']==0){
+												 echo "<td align='center'>Need to check bload pressure</td>";
+												}
+												if($rs['app_status']==1){
+												 echo "<td align='center'>Doctor attending patient</td>";
+												}
+												if($rs['app_status']==2){
+												 echo "<td align='center'>Collect medication</td>";
+												}
+												 echo "</td></tr>";
                                         }
                                     }
 
@@ -172,21 +196,45 @@ $pDetails = $sql->fetch();
                 <span>Make Appointment</span>
             </div>
             <div class="modal-body">
-                <h5 class="text-danger bold" <?php if($pDetails['blood_pressure']!='') { echo 'hidden'; } ?>>
-                    Please ask one of the staff nurse's to check your blood pressure, before making any appointments.
-                </h5>
 
-                <form class="form-horizontal" method="POST" action="sql.php" enctype="multipart/form-data" <?php if($pDetails['blood_pressure']=='') { echo 'hidden'; } ?>>
+                <form class="form-horizontal" method="POST" action="sql.php" enctype="multipart/form-data" >
 
-                    <div class="form-group row" style="display: block">
+                    <div class="form-group row" style="display: block" hidden>
                     <label class="col-sm-4 col-form-label text-warning">Temperature: <?php if(isset($pDetails['blood_pressure'])) { echo $pDetails['blood_pressure']; } ?></label>
                     </div>
                         <input hidden name="blood_pressure" value="<?php if(isset($pDetails['blood_pressure'])) { echo $pDetails['blood_pressure']; } ?>">
 
                     <div class="form-group row" style="display: block">
+						<label class="col-sm-4 col-form-label">Select a doctor</label>
+						<div class="col-sm-12">
+							<select class="form-control doctor" name="doctor" required="">
+								<option value="" selected disabled>Select a doctor</option>
+								<?php
+                                    $sql =$init->prepare("SELECT * FROM doctor");
+                                    $sql->execute();
+                                    $qsql = $sql->fetchAll();
+                                    if($sql->rowCount() > 0){
+                                        foreach($qsql as $rs)
+                                        {
+                                            echo "<option value='$rs[doctorid]'>$rs[doctorname]</option>";
+                                        }
+                                    }
+
+                                    ?>
+							</select>
+
+							</div>
+
+						<label class="col-sm-4 col-form-label">Slot</label>
+						<div class="col-sm-12">
+							<select class="form-control slot" name="slot" required="">
+								
+							</select>
+						</div>
+						
                         <label class="col-sm-4 col-form-label">Reason</label>
                         <div class="col-sm-12">
-                            <textarea class="form-control" type="text" name="reason" rows="4" placeholder="Type in reason for appointment here..."></textarea>
+                            <textarea class="form-control" type="text" name="reason" rows="4" placeholder="Type in reason for appointment here..." required></textarea>
                         </div>
 
                     </div>
@@ -203,17 +251,34 @@ $pDetails = $sql->fetch();
 <?php include('../pages/alerts.php'); include('footer.php');?>
 
 <script>
-    var addButtonTrigger = function addButtonTrigger(el) {
-        el.addEventListener('click', function () {
-            var popupEl = document.querySelector('.' + el.dataset.for);
-            popupEl.classList.toggle('popup--visible');
-        });
-    };
+	var addButtonTrigger = function addButtonTrigger(el) {
+	el.addEventListener('click', function () {
+	var popupEl = document.querySelector('.' + el.dataset.for);
+	popupEl.classList.toggle('popup--visible');
+	});
+	};
 
-    Array.from(document.querySelectorAll('button[data-for]')).
-    forEach(addButtonTrigger);
+	Array.from(document.querySelectorAll('button[data-for]')).
+	forEach(addButtonTrigger);
 
-    $('.app-btn').on('click',function () {
-        $('#app-modal').modal('show');
-    });
+	$('.app-btn').on('click',function () {
+	$('#app-modal').modal('show');
+	});
+
+	$('.doctor').on('change',function () {
+	$.post("sql.php",
+	{
+	doctorid: $('.doctor').val()
+	},
+	function(data, status){
+	$('.slot').html('');
+	$.each(JSON.parse(data), function(a,i){
+
+	$('.slot').append("<option value='"+i.doctor_timings_id+"'>"+i.start_time+" - "+i.end_time+"</option>");
+	 });
+	});
+
+	});
+
+
 </script>

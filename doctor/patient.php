@@ -9,7 +9,7 @@ if(isset($_POST['btn_submit']))
 {
     if(isset($_GET['editid']))
     {
-        $sql =$init->prepare("UPDATE appointment SET prescription='$_POST[prescription]' WHERE appointmentid='$_GET[editid]'");
+        $sql =$init->prepare("UPDATE appointment SET prescription='$_POST[prescription]', APP_STATUS=2 WHERE appointmentid='$_GET[editid]'");
         $sql->execute();
 
         if($sql->rowCount() > 0)

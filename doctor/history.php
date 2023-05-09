@@ -99,7 +99,7 @@ if(isset($_GET['delid']))
                                     <tbody>
                                     <?php
                                     $sql =$init->prepare("SELECT * FROM appointment,patient WHERE appointment.patientid=patient.patientid 
-                                                          AND doctorid='$_SESSION[id]' AND app_status<>0");
+                                                          AND doctorid='$_SESSION[id]' AND app_status in (2,3,4)");
                                     $sql->execute();
                                     $qsql = $sql->fetchAll();
                                     foreach($qsql as $rs)
@@ -121,11 +121,15 @@ if(isset($_GET['delid']))
                                                 <td>$rs[reason]</td>
                                                 <td>$rs[prescription]</td>
                                                 <td align='center'>";
-                                        if($rs['app_status']==0)
+                                        if($rs['app_status']==2)
                                         {
                                             echo "<i class='text-warning'>Pending Medication Collection</i>";
-                                        }else{
+                                        }
+										if($rs['app_status']==3){
                                             echo "<i class='text-success'>Collected</i>";
+                                        }
+										if($rs['app_status']==4){
+                                            echo "<i class='text-danger'>Missed Appointment</i>";
                                         }
                                         echo "</td></tr>";
                                     }

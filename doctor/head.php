@@ -5,7 +5,7 @@
 
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
-<title>Nurse Panel</title>
+<title>Doctor Panel</title>
 
 
 <meta charset="utf-8">

@@ -110,7 +110,16 @@ if(isset($_GET['delid']))
                                     {
                                         $dob = substr($rs['id_number'],4,2).'-'.substr($rs['id_number'],2,2).'-';
                                         $year=(substr($rs['id_number'],0,2) <= 22) ? '19': '20'.substr($rs['id_number'],0,2);
-                                        $temp = $rs['blood_pressure']==null?'<i class="text-warning">Please Update Temperature</i>':'<i class="">'.$rs['blood_pressure'].'</i>';;
+										
+										$sql2 =$init->prepare("SELECT * from appointment where patientid='$rs[patientid]' and blood_pressure='' and app_status=0");
+                                        $sql2->execute();
+                                        $brec = $sql2->fetchAll();
+										
+										if($sql2->rowCount() > 0 ){
+										  $temp = '<i class="text-warning">Please Update Temperature</i>';
+										}else{
+										  $temp = '<i class="">'.$rs['blood_pressure'].'</i>';
+										}
 
                                         echo "<tr>
                                                 <td><strong>Names : </strong> $rs[fname] $rs[lname]<br>

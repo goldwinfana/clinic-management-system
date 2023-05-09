@@ -94,7 +94,7 @@ if(isset($_GET['delid']))
                                     <tbody>
                                     <?php
                                     $sql =$init->prepare("SELECT * FROM appointment,patient WHERE appointment.patientid=patient.patientid 
-                                                          AND doctorid='$_SESSION[id]' AND app_status=0");
+                                                          AND doctorid='$_SESSION[id]' AND app_status=2");
                                     $sql->execute();
                                     $qsql = $sql->fetchAll();
                                     foreach($qsql as $rs)

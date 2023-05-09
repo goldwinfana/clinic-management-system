@@ -98,18 +98,25 @@ if(isset($_GET['delid']))
                                     </thead>
                                     <tbody>
                                     <?php
-                                    $sql =$init->prepare("SELECT * FROM appointment,doctor where doctor.doctorid=appointment.doctorid AND patientid='$_SESSION[id]'");
+                                    $sql =$init->prepare("SELECT * FROM appointment,doctor where doctor.doctorid=appointment.doctorid AND patientid='$_SESSION[id]' AND app_status in (3,4)");
                                     $sql->execute();
                                     $qsql = $sql->fetchAll();
                                     if($sql->rowCount() > 0){
                                         foreach($qsql as $rs)
                                         {
+										 
                                             echo "<tr>
                                                 <td>$rs[reason]</td>
                                                 <td><strong>Name: $rs[doctorname]</strong><br>
                                                  <strong>Mobile: $rs[mobileno]</strong></td>
-                                                <td>$rs[blood_pressure]</td>
-                                                <td align='center'>Status - $rs[app_status] <br></td></tr>";
+                                                <td>$rs[blood_pressure]</td>";
+												if($rs['app_status']==3){
+													echo "<td align='center' class='text-success'>Finsihed</td>";
+												}else{
+													echo "<td align='center' class='text-danger'>Missed Appointment</td>";
+												}
+											
+												 echo "</td></tr>";
                                         }
                                     }
 

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 13, 2022 at 08:44 AM
--- Server version: 10.4.16-MariaDB
--- PHP Version: 7.4.12
+-- Generation Time: May 09, 2023 at 01:01 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -45,7 +45,7 @@ CREATE TABLE `admin` (
   `role_id` int(11) NOT NULL,
   `last_login` date NOT NULL,
   `delete_status` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `admin`
@@ -68,15 +68,19 @@ CREATE TABLE `appointment` (
   `reason` text DEFAULT NULL,
   `prescription` text DEFAULT NULL,
   `blood_pressure` text NOT NULL,
+  `booking_date` timestamp NULL DEFAULT current_timestamp(),
   `app_status` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `appointment`
 --
 
-INSERT INTO `appointment` (`appointmentid`, `patientid`, `doctorid`, `appointment_date`, `reason`, `prescription`, `blood_pressure`, `app_status`) VALUES
-(1, 1, 1, '2022-06-12 10:46:14 AM', 'Massive headache', 'panado', '82', '1');
+INSERT INTO `appointment` (`appointmentid`, `patientid`, `doctorid`, `appointment_date`, `reason`, `prescription`, `blood_pressure`, `booking_date`, `app_status`) VALUES
+(1, 1, 1, '2022-06-12 10:46:14 AM', 'Massive headache', 'panado', '82', '2023-05-08 17:36:31', '3'),
+(3, 1, 1, '180016', 'Checking ', NULL, '15', '2023-05-08 17:36:31', '4'),
+(4, 1, 1, '10:00:00 - 11:00:00', 'Testing', 'Meds', '15', '2023-05-08 17:36:31', '4'),
+(5, 1, 1, '19:00:00 - 20:00:00', 'Test2', 'testing', '22', '2023-05-09 17:36:31', '3');
 
 -- --------------------------------------------------------
 
@@ -90,7 +94,7 @@ CREATE TABLE `department` (
   `description` text NOT NULL,
   `status` varchar(10) NOT NULL,
   `delete_status` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `department`
@@ -118,7 +122,7 @@ CREATE TABLE `doctor` (
   `experience` float(11,1) NOT NULL,
   `consultancy_charge` float(10,2) NOT NULL,
   `delete_status` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `doctor`
@@ -138,17 +142,26 @@ CREATE TABLE `doctor_timings` (
   `doctorid` int(10) NOT NULL,
   `start_time` time NOT NULL,
   `end_time` time NOT NULL,
-  `available_day` varchar(15) NOT NULL,
-  `status` varchar(10) NOT NULL,
-  `delete_status` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `status` varchar(15) NOT NULL DEFAULT 'Available'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `doctor_timings`
 --
 
-INSERT INTO `doctor_timings` (`doctor_timings_id`, `doctorid`, `start_time`, `end_time`, `available_day`, `status`, `delete_status`) VALUES
-(1, 1, '09:00:00', '12:00:00', '', 'Active', 0);
+INSERT INTO `doctor_timings` (`doctor_timings_id`, `doctorid`, `start_time`, `end_time`, `status`) VALUES
+(1, 1, '07:00:00', '08:00:00', 'Available'),
+(2, 1, '08:00:00', '09:00:00', 'Available'),
+(3, 1, '09:00:00', '10:00:00', 'Available'),
+(4, 1, '10:00:00', '11:00:00', 'Available'),
+(5, 1, '11:00:00', '12:00:00', 'Available'),
+(6, 1, '13:00:00', '14:00:00', 'Available'),
+(7, 1, '14:00:00', '15:00:00', 'Available'),
+(8, 1, '15:00:00', '16:00:00', 'Available'),
+(9, 1, '16:00:00', '17:00:00', 'Available'),
+(10, 1, '17:00:00', '18:00:00', 'Booked'),
+(11, 1, '19:00:00', '20:00:00', 'Booked'),
+(12, 1, '20:00:00', '21:00:00', 'Booked');
 
 -- --------------------------------------------------------
 
@@ -169,7 +182,7 @@ CREATE TABLE `manage_website` (
   `date_format` date NOT NULL,
   `def_tax` varchar(500) NOT NULL,
   `logo` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `manage_website`
@@ -192,7 +205,7 @@ CREATE TABLE `nurse` (
   `password` text NOT NULL,
   `mobile` text DEFAULT NULL,
   `status` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `nurse`
@@ -222,7 +235,7 @@ CREATE TABLE `patient` (
   `age` int(11) NOT NULL,
   `status` varchar(10) DEFAULT NULL,
   `delete_status` int(11) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `patient`
@@ -246,7 +259,7 @@ CREATE TABLE `pharmacy` (
   `password` text NOT NULL,
   `status` text DEFAULT NULL,
   `mobile` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `pharmacy`
@@ -271,7 +284,7 @@ CREATE TABLE `prescription` (
   `prescriptiondate` date NOT NULL,
   `status` varchar(10) NOT NULL,
   `appointmentid` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -287,7 +300,7 @@ CREATE TABLE `prescription_records` (
   `unit` int(10) NOT NULL,
   `dosage` varchar(25) NOT NULL,
   `status` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -301,7 +314,7 @@ CREATE TABLE `service_type` (
   `servicecharge` float(10,2) NOT NULL,
   `description` text NOT NULL,
   `status` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `service_type`
@@ -328,7 +341,7 @@ CREATE TABLE `user` (
   `mobileno` varchar(15) NOT NULL,
   `email` varchar(50) NOT NULL,
   `createddateandtime` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -343,7 +356,7 @@ CREATE TABLE `visit` (
   `blood_pressure` text DEFAULT NULL,
   `prescription` text DEFAULT NULL,
   `collection` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
@@ -423,7 +436,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `appointment`
 --
 ALTER TABLE `appointment`
-  MODIFY `appointmentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `appointmentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `department`
@@ -441,7 +454,7 @@ ALTER TABLE `doctor`
 -- AUTO_INCREMENT for table `doctor_timings`
 --
 ALTER TABLE `doctor_timings`
-  MODIFY `doctor_timings_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `doctor_timings_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `manage_website`

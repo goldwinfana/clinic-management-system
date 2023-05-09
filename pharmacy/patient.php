@@ -9,7 +9,6 @@ if(isset($_GET['confirm_collection']))
     $sql =$init->prepare("SELECT * FROM appointment WHERE appointmentid='$_GET[confirm_collection]'");
     $sql->execute();
     $rsedit = $sql->fetch();
-
 }
 
 ?>

@@ -1,4 +1,3 @@
-AND app_status
 <?php require_once('check_login.php');?>
 <?php include('head.php');?>
 <?php include('header.php');?>
@@ -6,6 +5,12 @@ AND app_status
 <?php include('../connect2.php');
 
 $init = $pdo->open();
+
+ $current_time = date('H:i:s');
+ $sql =$init->prepare("UPDATE doctor_timings SET STATUS='Available' where doctorid='$_SESSION[id]'AND end_time < '$current_time'");
+     $sql->execute(); 
+
+
 if(isset($_GET['id']))
 {
     $sql =$init->prepare("UPDATE patient SET delete_status='1' WHERE patientid='$_GET[id]'");
@@ -98,14 +103,14 @@ if(isset($_GET['delid']))
                                     <tbody>
                                     <?php
                                     $sql =$init->prepare("SELECT * FROM appointment,patient WHERE appointment.patientid=patient.patientid 
-                                                          AND doctorid='$_SESSION[id]' AND app_status=0");
+                                                          AND doctorid='$_SESSION[id]' AND app_status=1");
                                     $sql->execute();
                                     $qsql = $sql->fetchAll();
                                     foreach($qsql as $rs)
                                     {
                                         $dob = substr($rs['id_number'],4,2).'-'.substr($rs['id_number'],2,2).'-';
                                         $year=((substr($rs['id_number'],0,2) > 22) ? '19': '20').substr($rs['id_number'],0,2);
-                                        $temp = $rs['blood_pressure']==null?'<i class="text-warning">Please Update Temperature</i>':'<i class="">'.$rs['blood_pressure'].'</i>';;
+                                        $temp = $rs['blood_pressure'];
 
                                         echo "<tr>
                                                 <td><strong>Names : </strong> $rs[fname] $rs[lname]<br>

@@ -9,26 +9,37 @@ if(isset($_POST['btn_submit']))
 {
     if(isset($_GET['editid']))
     {
-        $sql =$init->prepare("UPDATE patient SET blood_pressure='$_POST[blood_pressure]' WHERE patientid='$_GET[editid]'");
+	    $user =$init->prepare("UPDATE patient SET blood_pressure='$_POST[blood_pressure]' where patientid='$_GET[editid]'");
+        $user->execute();
+		
+		
+		$sql =$init->prepare("SELECT * from appointment where patientid='$_GET[editid]' and app_status=0");
         $sql->execute();
-        if($sql->rowCount() > 0)
-        {
-            ?>
-            <div class="popup popup--icon -success js_success-popup popup--visible">
-                <div class="popup__background"></div>
-                <div class="popup__content">
-                    <h3 class="popup__content__title">
-                        Success
-                    </h3>
-                    <p>Patient Record Updated Successfully</p>
-                    <p>
-                        <!--  <a href="index.php"><button class="button button--success" data-for="js_success-popup"></button></a> -->
-                        <?php echo "<script>setTimeout(\"location.href = 'index.php';\",1500);</script>"; ?>
-                    </p>
-                </div>
-            </div>
-            <?php
+        $records = $sql->fetchAll();
+
+        foreach($records as $rec){
+
+          if( substr($rec['appointment_date'],strpos($rec['appointment_date'],"- ")+2,8) > date('H:i:s')){
+             $sql =$init->prepare("UPDATE appointment SET blood_pressure='$_POST[blood_pressure]', APP_STATUS=1 where appointmentid='$rec[appointmentid]'");
+             $sql->execute();
+          }
         }
+		
+       ?>
+        <div class="popup popup--icon -success js_success-popup popup--visible">
+            <div class="popup__background"></div>
+            <div class="popup__content">
+                <h3 class="popup__content__title">
+                    Success
+                </h3>
+                <p>Patient Record Updated Successfully</p>
+                <p>
+                    <!--  <a href="index.php"><button class="button button--success" data-for="js_success-popup"></button></a> -->
+                    <?php echo "<script>setTimeout(\"location.href = 'index.php';\",1500);</script>"; ?>
+                </p>
+            </div>
+        </div>
+        <?php
     }
 }
 if(isset($_GET['editid']))

@@ -9,7 +9,7 @@ $init = $pdo->open();
 if(isset($_POST['confirm_collection']))
 {
     try{
-        $sql =$init->prepare("UPDATE appointment SET app_status=1
+        $sql =$init->prepare("UPDATE appointment SET app_status=3
                           WHERE appointmentid='$_POST[confirm_collection]'");
         $sql->execute();
         $getP =$init->prepare("SELECT * FROM appointment WHERE appointmentid='$_POST[confirm_collection]'");
