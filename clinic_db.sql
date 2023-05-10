@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2023 at 08:45 PM
+-- Generation Time: May 10, 2023 at 10:39 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -80,7 +80,7 @@ INSERT INTO `appointment` (`appointmentid`, `patientid`, `doctorid`, `appointmen
 (1, 1, 1, '2022-06-12 10:46:14 AM', 'Massive headache', 'panado', '82', '2023-05-08 17:36:31', '3'),
 (3, 1, 1, '180016', 'Checking ', NULL, '15', '2023-05-08 17:36:31', '4'),
 (4, 1, 1, '10:00:00 - 11:00:00', 'Testing', 'Meds', '15', '2023-05-08 17:36:31', '4'),
-(5, 1, 1, '20:00:00 - 21:00:00', 'Test2', 'Check again pills', '12.5', '2023-05-09 17:36:31', '2');
+(5, 1, 1, '20:00:00 - 21:00:00', 'Test2', 'Check again pills', '12.5', '2023-05-09 17:36:31', '4');
 
 -- --------------------------------------------------------
 
@@ -120,7 +120,6 @@ CREATE TABLE `doctor` (
   `status` varchar(10) NOT NULL,
   `education` varchar(25) NOT NULL,
   `experience` float(11,1) NOT NULL,
-  `consultancy_charge` float(10,2) NOT NULL,
   `delete_status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -128,8 +127,8 @@ CREATE TABLE `doctor` (
 -- Dumping data for table `doctor`
 --
 
-INSERT INTO `doctor` (`doctorid`, `doctorname`, `mobileno`, `departmentid`, `email`, `password`, `status`, `education`, `experience`, `consultancy_charge`, `delete_status`) VALUES
-(1, 'Dr Kat', '0710217499', 1, 'doctor@gmail.com', '1234@Abc', 'Active', 'MD', 3.0, 200.00, 0);
+INSERT INTO `doctor` (`doctorid`, `doctorname`, `mobileno`, `departmentid`, `email`, `password`, `status`, `education`, `experience`, `delete_status`) VALUES
+(1, 'Dr Kat', '0710217499', 1, 'doctor@gmail.com', '1234@Abc', 'Active', 'MD', 3.0, 0);
 
 -- --------------------------------------------------------
 

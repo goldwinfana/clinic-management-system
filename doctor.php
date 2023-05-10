@@ -7,7 +7,7 @@ if(isset($_POST['btn_submit']))
 {
     if(isset($_GET['editid']))
     {
-        $sql ="UPDATE doctor SET doctorname='$_POST[doctorname]',mobileno='$_POST[mobilenumber]',departmentid='$_POST[department]',email='$_POST[email]',status='$_POST[status]',education='$_POST[education]',experience='$_POST[experience]',consultancy_charge='$_POST[consultancy_charge]' WHERE doctorid='$_GET[editid]'";
+        $sql ="UPDATE doctor SET doctorname='$_POST[doctorname]',mobileno='$_POST[mobilenumber]',departmentid='$_POST[department]',email='$_POST[email]',status='$_POST[status]',education='$_POST[education]',experience='$_POST[experience]' WHERE doctorid='$_GET[editid]'";
         if($qsql = mysqli_query($conn,$sql))
         {
             ?>
@@ -40,7 +40,7 @@ if(isset($_POST['btn_submit']))
         }
         $salt = createSalt();
         $pass = hash('sha256', $salt . $passw);
-        $sql ="INSERT INTO doctor(doctorname,mobileno,departmentid,loginid,password,status,education,experience,consultancy_charge) values('$_POST[doctorname]','$_POST[mobilenumber]','$_POST[department]','$_POST[loginid]','$pass','$_POST[status]','$_POST[education]','$_POST[experience]','$_POST[consultancy_charge]')";
+        $sql ="INSERT INTO doctor(doctorname,mobileno,departmentid,loginid,password,status,education,experience) values('$_POST[doctorname]','$_POST[mobilenumber]','$_POST[department]','$_POST[loginid]','$pass','$_POST[status]','$_POST[education]','$_POST[experience]')";
         if($qsql = mysqli_query($conn,$sql))
         {
             ?>
@@ -72,6 +72,7 @@ if(isset($_GET['editid']))
     $rsedit = mysqli_fetch_array($qsql);
 
 }
+
 
 ?>
 <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
@@ -130,7 +131,7 @@ if(isset($_GET['editid']))
 
                                             <label class="col-sm-2 col-form-label">Mobile No</label>
                                             <div class="col-sm-4">
-                                                <input type="number" class="form-control" name="mobilenumber" id="mobilenumber" placeholder="Enter mobilenumber...." required="" value="<?php echo $rsedit['mobileno']; ?>">
+                                                <input type="number" class="form-control" name="mobilenumber" id="mobilenumber" placeholder="Enter mobilenumber...." required="" value="<?php if(isset($_GET['editid'])) { echo $rsedit['mobileno']; } ?>">
                                                 <span class="messages"></span>
                                             </div>
                                         </div>
@@ -145,11 +146,12 @@ if(isset($_GET['editid']))
                                                     $qsqldepartment = mysqli_query($conn,$sqldepartment);
                                                     while($rsdepartment=mysqli_fetch_array($qsqldepartment))
                                                     {
-                                                        if($rsdepartment[departmentid] == $rsedit[departmentid])
-                                                        {
-                                                            echo "<option value='$rsdepartment[departmentid]' selected>$rsdepartment[departmentname]</option>";
-                                                        }
-                                                        else
+												     	if(isset($_GET['editid'])) {
+														    if($rsdepartment[departmentid] == $rsedit[departmentid])
+                                                            {
+                                                                echo "<option value='$rsdepartment[departmentid]' selected>$rsdepartment[departmentname]</option>";
+                                                            }
+														}else
                                                         {
                                                             echo "<option value='$rsdepartment[departmentid]'>$rsdepartment[departmentname]</option>";
                                                         }
@@ -201,10 +203,6 @@ if(isset($_GET['editid']))
                                         </div>
 
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Consultancy Charge</label>
-                                            <div class="col-sm-4">
-                                                <input class="form-control" type="text" name="consultancy_charge" id="consultancy_charge" value="<?php if(isset($_GET['editid'])) { echo $rsedit['consultancy_charge']; } ?>"/>
-                                            </div>
 
                                             <label class="col-sm-2 col-form-label">Status</label>
                                             <div class="col-sm-4">

@@ -271,11 +271,15 @@ $pDetails = $sql->fetch();
 	doctorid: $('.doctor').val()
 	},
 	function(data, status){
-	$('.slot').html('');
-	$.each(JSON.parse(data), function(a,i){
 
-	$('.slot').append("<option value='"+i.doctor_timings_id+"'>"+i.start_time+" - "+i.end_time+"</option>");
-	 });
+	   $('.slot').html('');
+	   $.each(JSON.parse(data), function(a,i){
+	    if(i.status=='Available'){
+	      $('.slot').append("<option value='"+i.doctor_timings_id+"'>"+i.start_time+" - "+i.end_time+" (Available)</option>");
+	    }else{
+	      $('.slot').append("<option value='"+i.doctor_timings_id+"' disabled>"+i.start_time+" - "+i.end_time+" (Booked)</option>");
+		}
+	   });
 	});
 
 	});

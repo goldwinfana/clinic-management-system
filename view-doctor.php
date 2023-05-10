@@ -95,7 +95,6 @@ if(isset($_GET['delid']))
                                         <th>Mobile Number</th>
                                         <th>Department</th>
                                         <th>Login ID</th>
-                                        <th>Consultancy Charge</th>
                                         <th>Education</th>
                                         <th>Experience</th>
                                         <th>Status</th>
@@ -117,7 +116,6 @@ if(isset($_GET['delid']))
                                                 <td>&nbsp;$rs[mobileno]</td>
                                                 <td>&nbsp;$rsdept[departmentname]</td>
                                                 <td>&nbsp;$rs[email]</td>
-                                                <td>&nbsp;$rs[consultancy_charge]</td>
                                                 <td>&nbsp;$rs[education]</td>
                                                 <td>&nbsp;$rs[experience] year</td>
                                                 <td>$rs[status]</td>

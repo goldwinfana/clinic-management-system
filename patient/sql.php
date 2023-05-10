@@ -35,7 +35,7 @@ if(isset($_POST['doctorid']))
 {
     try {
         $date = date('H:i:s');
-        $getP =$init->prepare("SELECT * FROM doctor_timings WHERE doctorid='$_POST[doctorid]' AND STATUS='Available' AND START_TIME > '$date'");  
+        $getP =$init->prepare("SELECT * FROM doctor_timings WHERE doctorid='$_POST[doctorid]'");  
         $getP->execute();
         $data = $getP->fetchAll();
         echo  json_encode($data);
