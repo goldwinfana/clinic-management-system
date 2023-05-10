@@ -29,16 +29,7 @@ if(isset($_POST['btn_signup'])){
         exit(0);
     }
 
-    $sql = $init->prepare("SELECT * FROM nurse WHERE email = :email");
-    $sql->execute(['email'=>$email]);
-    $row = $sql->fetch();
-
-    if($sql->rowCount() >0){
-        $_SESSION['error']= 'Email already exists.';
-        header('location: '.$return);
-        exit(0);
-    }
-
+    
     $sql = $init->prepare("SELECT * FROM doctor WHERE email = :email");
     $sql->execute(['email'=>$email]);
     $row = $sql->fetch();
