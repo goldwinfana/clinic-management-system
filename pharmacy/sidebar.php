@@ -34,6 +34,12 @@
                             <i class="feather icon-log-out"></i> Logout
                         </a>
                     </li>
+
+					<li>
+						<a href="https://www.facebook.com/profile.php?id=100093604747532">
+							<i class="feather icon-facebook"></i> Facebook Page
+						</a>
+					</li>
                 </ul>
             </div>
         </nav>

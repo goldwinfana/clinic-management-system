@@ -36,18 +36,24 @@
 
 
 
-                    <!-- <li class="">
-                    <a href="setting.php">
+                    <li class="">
+                    <a href="reports.php">
                     <span class="pcoded-micon"><i class="feather icon-bookmark"></i></span>
-                    <span class="pcoded-mtext">Settings</span>
+                    <span class="pcoded-mtext">Reports</span>
                     </a>
-                    </li> -->
+                    </li> 
 
                     <li>
                         <a href="../logout.php">
                             <i class="feather icon-log-out"></i> Logout
                         </a>
                     </li>
+
+					<li>
+						<a href="https://www.facebook.com/profile.php?id=100093604747532">
+							<i class="feather icon-facebook"></i> Facebook Page
+						</a>
+					</li>
                 </ul>
             </div>
         </nav>

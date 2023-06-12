@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 10, 2023 at 10:39 PM
+-- Generation Time: Jun 12, 2023 at 05:24 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -219,7 +219,7 @@ CREATE TABLE `patient` (
 
 INSERT INTO `patient` (`patientid`, `id_number`, `fname`, `lname`, `address`, `mobileno`, `pincode`, `email`, `password`, `blood_pressure`, `gender`, `age`, `status`, `delete_status`) VALUES
 (1, '7802025583087', 'James ', 'Bond', 'Soshanguve', '9423979339', '1234', 'patient@gmail.com', '1234@Abc', '12.5', 'Female', 19950725, 'Active', 0),
-(2, '7802025583080', 'fana', 'fana', '477 Sisulu Street', '0618710000', NULL, 'ptest@gmail.com', 'f1fb12f160dc4ca8ab66f87074fc1ae47908b4e079c35ce317474b5a85a8878c', '', 'Male', 24, 'Active', 0);
+(2, '6002025583080', 'fana', 'fana', '477 Sisulu Street', '0618710000', NULL, 'ptest@gmail.com', 'f1fb12f160dc4ca8ab66f87074fc1ae47908b4e079c35ce317474b5a85a8878c', '', 'Male', 24, 'Active', 0);
 
 -- --------------------------------------------------------
 

@@ -1,8 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\patient"
+    "\\doctor"
   ],
-  "SelectedNode": "\\patient\\index.php",
+  "SelectedNode": "\\reports.php",
   "PreviewInSolutionExplorer": false
 }

@@ -70,6 +70,14 @@
                                 </li>
                             </ul>
                         </li>
+					<li>
+						<a href="reports.php">
+							<span class="pcoded-micon">
+								<i class="feather icon-bookmark"></i>
+							</span>
+							<span class="pcoded-mtext">Reports</span>
+						</a>
+					</li>
                     <?php } ?>
 
                     <?php if($_SESSION['user'] == 'doctor') { ?>
@@ -244,6 +252,12 @@
                             <i class="feather icon-log-out"></i> Logout
                         </a>
                     </li>
+					<hr/>
+					<li>
+						<a href="https://www.facebook.com/profile.php?id=100093604747532">
+							<i class="feather icon-facebook"></i> Facebook Page
+						</a>
+					</li>
                 </ul>
             </div>
         </nav>
