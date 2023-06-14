@@ -35,14 +35,6 @@
                     </li>
 
 
-
-                    <li class="">
-                    <a href="reports.php">
-                    <span class="pcoded-micon"><i class="feather icon-bookmark"></i></span>
-                    <span class="pcoded-mtext">Reports</span>
-                    </a>
-                    </li> 
-
                     <li>
                         <a href="../logout.php">
                             <i class="feather icon-log-out"></i> Logout
