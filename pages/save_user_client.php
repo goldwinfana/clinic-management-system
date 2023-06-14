@@ -178,7 +178,7 @@ if(isset($_POST['btn_login']))
                 $_SESSION["fname"] = $row['fname'];
                 $_SESSION["lname"] = $row['lname'];
                 $_SESSION['user'] = $_POST['user'];
-                $url = '../patient/';
+                $url = '../patient/index.php';
             }
 
         }
